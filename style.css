@@ -1,0 +1,157 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    font-size: 62.5%; /* 16px*0,625 =10 px = 1rem */
+}
+
+body{
+    height: 100vh;
+    font: 1.6rem Helvetica, Arial;
+    margin: 0;
+}
+.grid-container {
+    display: grid;
+    grid-template-areas: 'header'
+    'main'
+    'footer';
+    grid-template-columns: 1fr;
+    grid-template-rows: 5rem 1fr 5rem;
+    height: 100%;
+}
+header{
+    grid-area: header;
+    background-color: #203040;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+header a{
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+header a:hover{
+    color: #f0899f;
+}
+.brand a {
+    font-size: 3rem;
+}
+
+footer{
+    background-color: #203040;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.productContainer{
+    margin:  6rem  2rem 0 ;
+}
+
+.products{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 1rem;
+    list-style: none;
+
+}
+.products img{
+    max-width: 20rem;
+    width: 100%;
+}
+
+
+*/
+.modal {
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color: white;
+    padding: 6rem;
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  .hidden {
+    display: none;
+  }
+
+main{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    margin: 6rem  5rem 0;
+}
+
+.cart > h5 {
+    margin: 0.5rem 0 0.5rem;
+    text-align: center;
+}
+
+.quantity{
+    display: flex;
+}
+form {
+    margin-left: 0rem;
+    display: flex;
+    flex-wrap: wrap;
+    height: 9rem;
+    width: 20rem;
+
+}
+form > h5 {
+margin-left: 3rem;
+padding-bottom: 2rem;
+}
+
+label{
+    width: 40%;
+    display: flex;
+    text-align: center;
+    flex: 1 1 50%;
+    justify-content: center;
+    height: 2.5rem;
+}
+label > h5{
+    margin: 0;
+    padding-top: 5px;
+}
+input{
+    height: 2.5rem;
+    flex: 1 1 50%;
+    text-align: center;
+}
+
+.item  img{
+    max-width: 25rem;
+    width: 100%;
+}
+
+.total{
+    width: 40px;
+}
+
+button {
+        height: 2.5rem;
+        width: 6rem;
+        margin-bottom: 1.3rem;
+        margin-left: 1rem;
+    }
+
+
+
+
