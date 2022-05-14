@@ -9,38 +9,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+        <div class="grid-container">
+        <header>
+        <div class="brand">           
+            <a href="/#/">Rocker Shop</a>
+        </div>
+        <div>
+            <a class="cart" href="/#/cart">cart</a>
+        </div>
+        </header>
+        <div class="modal hidden">
+            <button class="close-modal">&times;</button>
+            <p>
+        Product Added!
+            </p>
+        </div>
 
-
-
- <div class="container">
-    <div class="cart">
-        <h5 class="productTitle">Product Title</h5>
-        <div class="item"><img src="./images/product-1.jpeg" alt=""></div>
-    </div>
-    <form class="form" action="form">
-        <label for="Miktar"><h5>Miktar</h5></label>
-        <input type="number" name="quantity" class="quantity" min="1" max="50" value="1" autofocus="">
-        <h5>Subtotal: 15.35$</h5>
-    </form>     
-    <div class="total">
-    <button>Approve</button>
-<button>Delete</button>
-</div>
-</div> 
-<div class="container">
-    <div class="cart">
-        <h5 class="productTitle">Product Title</h5>
-        <div class="item"><img src="./images/product-1.jpeg" alt=""></div>
-    </div>
-    <form class="form" action="form">
-        <label for="Miktar"><h5>Miktar</h5></label>
-        <input type="number" name="quantity" class="quantity" min="1" max="50" value="1" autofocus="">
-        <h5>Subtotal: 15.35$</h5>
-    </form>     
-    <div class="total">
-    <button>Approve</button>
-<button>Delete</button>
-</div>
-</div>  
+        <main class="productContainer"><div>
+            <ul class="products">
+            </ul>
+            <ul class="cartContainer"></ul>
+        </div>
+        <aside class="totalContainer"></aside>
+        </main>
+        <footer>Long Live Rock Roll</footer>
+       </div>
 </body>
 </html>
+
