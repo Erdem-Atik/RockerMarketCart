@@ -1,3 +1,4 @@
+'use strict';
 const products = document.querySelector(".products")
 const cartSymbol = document.querySelector(".cart")
 const modal = document.querySelector(".modal");
@@ -7,47 +8,9 @@ const brand = document.querySelector(".brand")
 const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
-// products data
-const allProducts= 
-{
-  "items": [
-    {
-      "sys": { "id": "1" },
-      "fields": {
-        "title": "Fender Black Accoustic",
-        "price": 10,
-        "image": "./images/product-1.JPG" ,
-        "brand": "Fender"
-      }
-    },
-    {
-      "sys": { "id": "2" },
-      "fields": {
-        "title": "Ibanez Electro Guitar",
-        "price": 20,
-        "image":  "./images/product-2.JPG",
-        "brand": "Great Comfort"
-
-      }}
-    ,
-    {
-      "sys": { "id": "3" },
-      "fields": {
-        "title": "Ibanez Washed Denim",
-        "price": 30,
-        "image":  "./images/product-3.JPG",
-        "brand": "Bed Bright" 
-      }
-    } 
-  ]
-}
-
-const cart = []
-//product marker
-
-init();
-
-function init(){
+function init(pdata){
+  const cart = []
+  let productsInCart
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -79,41 +42,44 @@ const displayProduct= function(pdata){
     })
 }
 
-displayProduct(allProducts)  // display the products
+displayProduct(pdata)  // display the products
 
 const productbtn= document.querySelectorAll("button")
 
-
-const productCounter = function(arr){
-  cartSymbol.textContent = `CART Added: ${arr.length}`
+const cartCounter = function(arr){
+  const productNumb = arr.reduce((a,b)=>(a+b.numb),0)
+ cartSymbol.textContent = `cart added: ${productNumb}`
 }
 
 productbtn.forEach(el=>{
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;
-  allProducts.items.forEach(el=>{
+ pdata.items.forEach(el=>{
     if(+el.sys.id===+chosenProductID){ // think again!
-
       cart.push(el)
+       const counts = {};
+       cart.forEach((el)=>{
+       counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
+       el.numb=counts[el.sys.id]
+       el.total = function(){
+       return this.fields.price*this.numb
+        }    
+      })
+      productsInCart = [...new Set(cart)]   // same products are collected in one object
+      cartCounter(productsInCart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
   })
- // console.log(cart);
-  
-productCounter(cart)
   })
 })
-
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
   const modalClose = e.target;
   if (modalClose.classList.contains("close-modal")) {
     const modalPopUp = modalClose.parentElement;
-    modalPopUp.classList.add("hidden");  
-     
+    modalPopUp.classList.add("hidden");      
   }
 });
-
 //modal closer 
  document.querySelectorAll('*').forEach(element => element.addEventListener('click', e => {
    if(e.target.className===`btn-add-cart`&& !Array.from(modal.classList).includes('hidden')){
@@ -145,132 +111,90 @@ const showCart = function(arr){
             </div>
             <div class="price">
              <h5 class="productPrice">${el.total()}</h5>
+   
              </div>
         </div>
-       </li>
 
+       </li>     
   `
- 
     cartContainer.insertAdjacentHTML("beforeend", markup);
-   
+
   })
-
-
   const sum2 = arr.reduce((a,b)=>(a+b.total()),0)
-  console.log( totalContainer);
-  console.log(sum2);
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum2}</h5>
                   </div>`           
   totalContainer.insertAdjacentHTML("beforeend", sumMark );
-
 }
-
 //showing cart 
-
 cartSymbol.addEventListener('click', function(e){
+
   products.innerHTML ="";
-  
-  const counts = {};
-  cart.forEach((el)=>{
-   counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
-  })
-//adding quantity to product's object
-  cart.forEach(el=>{
-    el.numb=counts[el.sys.id]
-  })
-
-  cart.forEach(el=>{
-    el.total = function(){
-      return this.fields.price*this.numb
-    }
-
-  })
-
-
-    console.log(cart);
-
-  let arr2 = [...new Set(cart)]
-
-  showCart(arr2);
-
-  const input = document.querySelectorAll(".input")
+  cartCounter(productsInCart);
+  showCart(productsInCart);
+  const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
 
   input.forEach(el=>el.addEventListener('click', function(e)
   {
+    cartCounter(productsInCart);
     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
-    
-    arr2.forEach(el=>{
+    productsInCart.forEach(el=>{
       if(+el.sys.id===+choose){
-        el.numb>1?el.numb=el.numb-1:el.numb=el.numb
-            console.log(el.numb);
-
-
-//update all products total price UI
-        const sum2 = arr2.reduce((a,b)=>(a+b.total()),0)
+        el.numb = +e.target.value        
+        e.target.parentElement.parentElement.childNodes[9].innerText=el.total()
+      } 
+    })
+    console.log('test');
+// //update all products total price UI
+    const sum2 = productsInCart.reduce((a,b)=>(a+b.total()),0)
         const sumMark = `<div class="total">
                       <h5>ORDER SUMMARY</h5>
                       <h5>TOTAL:${sum2}</h5>
                       </div>`     
       totalContainer.innerHTML=""
       totalContainer.insertAdjacentHTML("beforeend", sumMark );
-// //update single product total price UI
-//         price.innerHTML="";
-//         arr2.forEach(el=>{
-//             price.innerHTML= el.total()
-//         })
-      }
-    })
-   
+
    })) 
-  
   delBtn.forEach(el=>el.addEventListener('click', function(e){
-    console.log('delete');
     const chosenProductID = e.target.parentElement;
-    console.log(chosenProductID);
-    arr2=arr2.filter(it=>{
+    productsInCart=productsInCart.filter(it=>{
       return +it.sys.id !== +chosenProductID.id
     })
     chosenProductID.parentElement.remove()
-    const sum2 = arr2.reduce((a,b)=>(a+b.total()),0)
-    console.log(sum2);
+    const sum2 = productsInCart.reduce((a,b)=>(a+b.total()),0)
     const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum2}</h5>
                   </div>`
   totalContainer.innerHTML=""
   totalContainer.insertAdjacentHTML("beforeend", sumMark );
-
+  cartCounter(productsInCart);
   }))
-
 })
-
+// brand.addEventListener('click',function(e){
+//  })
 }
 
-brand.addEventListener('click',function(e){
- init();
-})
+function getLocalStorage(description) {
+  return localStorage.getItem(description)
+    ? JSON.parse(localStorage.getItem(description))
+    : undefined;
+}
 
-
-
-
-
-//  const fetchData =function() {
-//     fetch('../products.json')
-//       .then((data) => data.json())
-//       .then((response) => displayProduct(response))
-//       .catch((err) => console.error(err.message));
-//   }
-
-
-//   fetchData();
-
-
-
-
-
+function setLocalStorage(description, article) {
+  localStorage.setItem(description, JSON.stringify(article));
+  if (description === 'currentCart') displayCartItems(article);
+}
    
+const fetchData =function() {
+  fetch('../products.json')
+    .then((data) => data.json())
+    .then((response) =>{
+      init(response)} )
+    .catch((err) => console.error(err.message));
+}
 
+fetchData()

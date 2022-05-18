@@ -1,34 +1,32 @@
-
 {
-  "items": [
-    {
-      "sys": { "id": "1" },
-      "fields": {
-        "title": "queen panel bed",
-        "price": 10.99,
-        "image": "./images/product-1.jpeg" ,
-        "brand": "Grand Bed"
-      }
-    },
-    {
-      "sys": { "id": "2" },
-      "fields": {
-        "title": "king panel bed",
-        "price": 12.99,
-        "image":  "./images/product-2.jpeg",
-        "brand": "Great Comfort"
-
-      }}
-    ,
-    {
-      "sys": { "id": "3" },
-      "fields": {
-        "title": "single panel bed",
-        "price": 12.99,
-        "image":  "./images/product-3.jpeg",
-        "brand": "Bed Bright" 
-      }
-    }
-   
-  ]
-}
+    "items": [
+      {
+        "sys": { "id": "1" },
+        "fields": {
+          "title": "Fender Black Accoustic",
+          "price": 10,
+          "image": "./images/product-1.JPG" ,
+          "brand": "Fender"
+        }
+      },
+      {
+        "sys": { "id": "2" },
+        "fields": {
+          "title": "Ibanez Electro Guitar",
+          "price": 20,
+          "image":  "./images/product-2.JPG",
+          "brand": "Great Comfort"
+  
+        }}
+      ,
+      {
+        "sys": { "id": "3" },
+        "fields": {
+          "title": "Ibanez Washed Denim",
+          "price": 30,
+          "image":  "./images/product-3.JPG",
+          "brand": "Bed Bright" 
+        }
+      } 
+    ]
+  }
