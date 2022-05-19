@@ -60,9 +60,7 @@ const cartCounter = function(arr){
   const productNumb = arr.reduce((a,b)=>(a+b.numb),0)
  cartSymbol.textContent = `cart added: ${productNumb}`
 }
-
 //cartCounter(productsInCart)
-
 productbtn.forEach(el=>{                        
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;  // find which product is selected
@@ -78,13 +76,8 @@ productbtn.forEach(el=>{
         }
        el.total= el._total()          
       })
-      console.log(cart);
       productsInCart=[...new Set(cart)] // same products are collected in one object
-      console.log(productsInCart);
-      console.log(JSON.stringify(productsInCart));
-      console.log(JSON.stringify(productsInCart));
       localStorage.setItem('productData',  JSON.stringify(productsInCart));
-      console.log(JSON.parse(localStorage.productData));
       cartCounter(productsInCart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
@@ -140,6 +133,7 @@ const showCart = function(arr){
 
   })
   const sum2 = arr.reduce((a,b)=>(a+b.total),0)
+  console.log(sum2);
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum2}</h5>
@@ -162,14 +156,16 @@ cartSymbol.addEventListener('click', function(e){
     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
     productsInCart.forEach(el=>{
       if(+el.sys.id===+choose){
-        el.numb = +e.target.value        
-        e.target.parentElement.parentElement.childNodes[9].innerText=el.total
+        el.numb = +e.target.value
+        el.total2 = function(){return el.numb*this.fields.price}        
+        e.target.parentElement.parentElement.childNodes[9].innerText=el.total2()
       } 
     })
 // //update all products total price UI
-    const sum2 = productsInCart.reduce((a,b)=>(a+b.total),0)
+    const sum2 = productsInCart.reduce((a,b)=>(a+b._total()),0)
+
     console.log(productsInCart);
-    console.log(sum2);
+
         const sumMark = `<div class="total">
                       <h5>ORDER SUMMARY</h5>
                       <h5>TOTAL:${sum2}</h5>
@@ -194,8 +190,6 @@ cartSymbol.addEventListener('click', function(e){
   cartCounter(productsInCart);
   }))
   console.log(productsInCart);
-  
- 
 })
 
 // brand.addEventListener('click',function(e){
@@ -207,8 +201,7 @@ cartSymbol.addEventListener('click', function(e){
 // // console.log(storedProduct);
 // console.log(localStorage);
 
-}
-   
+}   
 const fetchData =function() {
   fetch('../products.json')
     .then((data) => data.json())
