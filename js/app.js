@@ -8,12 +8,19 @@ const brand = document.querySelector(".brand")
 const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
-
-
 function init(pdata){
 
+
   const cart = []
-  let productsInCart  
+  let productsInCart
+  // if(JSON.parse(localStorage.productData))  {
+  //   productsInCart = JSON.parse(localStorage.productData)
+  //   console.log(productsInCart);
+   
+  // }else{
+  //   productsInCart=undefined
+  // }
+
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -54,6 +61,8 @@ const cartCounter = function(arr){
  cartSymbol.textContent = `cart added: ${productNumb}`
 }
 
+//cartCounter(productsInCart)
+
 productbtn.forEach(el=>{
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;
@@ -68,7 +77,11 @@ productbtn.forEach(el=>{
        return this.fields.price*this.numb
         }    
       })
-      productsInCart = [...new Set(cart)]   // same products are collected in one object
+      productsInCart=[...new Set(cart)] // same products are collected in one object
+      console.log(productsInCart);
+      console.log(JSON.stringify(productsInCart));
+      localStorage.setItem('productData',  JSON.stringify(productsInCart));
+      console.log(JSON.parse(localStorage.productData));
       cartCounter(productsInCart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
@@ -97,6 +110,7 @@ const showCart = function(arr){
   cartContainer.innerHTML="";
   totalContainer.innerHTML="";
   arr.forEach(el=> {
+    console.log(el);
   const markup = 
   `<li class="cartItems">
         <div class="item">
@@ -113,8 +127,7 @@ const showCart = function(arr){
             <button>Delete</button>
             </div>
             <div class="price">
-             <h5 class="productPrice">${el.total()}</h5>
-   
+             <h5 class="productPrice">${el.total()}</h5> 
              </div>
         </div>
 
@@ -176,28 +189,29 @@ cartSymbol.addEventListener('click', function(e){
   totalContainer.insertAdjacentHTML("beforeend", sumMark );
   cartCounter(productsInCart);
   }))
+  console.log(productsInCart);
+  
+ 
 })
+
 // brand.addEventListener('click',function(e){
 //  })
-}
+// localstorage.productsInCart = JSON.stringify(productsInCart);
+// var storedProduct = JSON.parse(localStorage.productsInCart);
 
-function getLocalStorage(description) {
-  return localStorage.getItem(description)
-    ? JSON.parse(localStorage.getItem(description))
-    : undefined;
-}
+// localStorage.setItem = JSON.stringify('cartdata', productsInCart)
+// // console.log(storedProduct);
+// console.log(localStorage);
 
-function setLocalStorage(description, article) {
-  localStorage.setItem(description, JSON.stringify(article));
-  if (description === 'currentCart') displayCartItems(article);
 }
    
 const fetchData =function() {
   fetch('../products.json')
     .then((data) => data.json())
     .then((response) =>{
-      init(response)} )
+      init(response)})
     .catch((err) => console.error(err.message));
 }
 
 fetchData()
+
