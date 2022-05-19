@@ -63,22 +63,25 @@ const cartCounter = function(arr){
 
 //cartCounter(productsInCart)
 
-productbtn.forEach(el=>{
+productbtn.forEach(el=>{                        
   el.addEventListener('click', function(e){
-  const chosenProductID = e.target.parentElement.id;
- pdata.items.forEach(el=>{
+  const chosenProductID = e.target.parentElement.id;  // find which product is selected
+ pdata.items.forEach(el=>{                            // add some properties the selected products(quantity, )
     if(+el.sys.id===+chosenProductID){ // think again!
       cart.push(el)
        const counts = {};
        cart.forEach((el)=>{
        counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
        el.numb=counts[el.sys.id]
-       el.total = function(){
-       return this.fields.price*this.numb
-        }    
+       el._total = function(){
+          return this.fields.price*this.numb
+        }
+       el.total= el._total()          
       })
+      console.log(cart);
       productsInCart=[...new Set(cart)] // same products are collected in one object
       console.log(productsInCart);
+      console.log(JSON.stringify(productsInCart));
       console.log(JSON.stringify(productsInCart));
       localStorage.setItem('productData',  JSON.stringify(productsInCart));
       console.log(JSON.parse(localStorage.productData));
@@ -127,7 +130,7 @@ const showCart = function(arr){
             <button>Delete</button>
             </div>
             <div class="price">
-             <h5 class="productPrice">${el.total()}</h5> 
+             <h5 class="productPrice">${el.total}</h5> 
              </div>
         </div>
 
@@ -136,7 +139,7 @@ const showCart = function(arr){
     cartContainer.insertAdjacentHTML("beforeend", markup);
 
   })
-  const sum2 = arr.reduce((a,b)=>(a+b.total()),0)
+  const sum2 = arr.reduce((a,b)=>(a+b.total),0)
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum2}</h5>
@@ -160,12 +163,13 @@ cartSymbol.addEventListener('click', function(e){
     productsInCart.forEach(el=>{
       if(+el.sys.id===+choose){
         el.numb = +e.target.value        
-        e.target.parentElement.parentElement.childNodes[9].innerText=el.total()
+        e.target.parentElement.parentElement.childNodes[9].innerText=el.total
       } 
     })
-    console.log('test');
 // //update all products total price UI
-    const sum2 = productsInCart.reduce((a,b)=>(a+b.total()),0)
+    const sum2 = productsInCart.reduce((a,b)=>(a+b.total),0)
+    console.log(productsInCart);
+    console.log(sum2);
         const sumMark = `<div class="total">
                       <h5>ORDER SUMMARY</h5>
                       <h5>TOTAL:${sum2}</h5>
@@ -180,7 +184,7 @@ cartSymbol.addEventListener('click', function(e){
       return +it.sys.id !== +chosenProductID.id
     })
     chosenProductID.parentElement.remove()
-    const sum2 = productsInCart.reduce((a,b)=>(a+b.total()),0)
+    const sum2 = productsInCart.reduce((a,b)=>(a+b.total),0)
     const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum2}</h5>
