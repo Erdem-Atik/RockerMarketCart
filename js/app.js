@@ -8,9 +8,12 @@ const brand = document.querySelector(".brand")
 const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
+
+
 function init(pdata){
+
   const cart = []
-  let productsInCart
+  let productsInCart  
 
 const displayProduct= function(pdata){
     products.innerHTML="";
