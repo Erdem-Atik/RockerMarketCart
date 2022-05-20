@@ -9,18 +9,14 @@ const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-
-
-  const cart = []
+  let cart
   let productsInCart
-  // if(JSON.parse(localStorage.productData))  {
-  //   productsInCart = JSON.parse(localStorage.productData)
-  //   console.log(productsInCart);
-   
-  // }else{
-  //   productsInCart=undefined
-  // }
-
+  console.log(JSON.parse(localStorage.productData));
+  if(JSON.parse(localStorage.productData))  {
+    cart = JSON.parse(localStorage.productData)
+  }else{
+    cart = []
+  }
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -56,9 +52,9 @@ displayProduct(pdata)  // display the products
 
 const productbtn= document.querySelectorAll("button")
 
-const cartCounter = function(arr){
+function cartCounter (arr){
   const productNumb = arr.reduce((a,b)=>(a+b.numb),0)
- cartSymbol.textContent = `cart added: ${productNumb}`
+  cartSymbol.textContent = `cart added: ${productNumb}`
 }
 //cartCounter(productsInCart)
 productbtn.forEach(el=>{                        
@@ -71,13 +67,12 @@ productbtn.forEach(el=>{
        cart.forEach((el)=>{
        counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
        el.numb=counts[el.sys.id]
-       el._total = function(){
-          return this.fields.price*this.numb
-        }
+       el._total = function(){ return this.fields.price*this.numb}
        el.total= el._total()          
       })
       productsInCart=[...new Set(cart)] // same products are collected in one object
-      localStorage.setItem('productData',  JSON.stringify(productsInCart));
+      localStorage.setItem('productData',  JSON.stringify(cart));
+      const getlocal= localStorage.getItem('productData')
       cartCounter(productsInCart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
@@ -101,7 +96,6 @@ modal.addEventListener("click", function (e) {
     modal.classList.add('hidden')
    }
 }))
-
 const displayTotal =function(arr){
   totalContainer.innerHTML="";
   const cartSum = arr.reduce((a,b)=>(a+b.total),0)
@@ -111,11 +105,9 @@ const displayTotal =function(arr){
                   </div>`           
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
-
 const showCart = function(arr){
   cartContainer.innerHTML="";
   arr.forEach(el=> {
-    console.log(el);
   const markup = 
   `<li class="cartItems">
         <div class="item">
@@ -143,14 +135,12 @@ const showCart = function(arr){
 }
 //showing cart 
 cartSymbol.addEventListener('click', function(e){
-
   products.innerHTML ="";
   cartCounter(productsInCart);
   showCart(productsInCart);
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
-  
   input.forEach(el=>el.addEventListener('click', function(e)
   {
     cartCounter(productsInCart);
@@ -177,18 +167,14 @@ cartSymbol.addEventListener('click', function(e){
    displayTotal(productsInCart)
    cartCounter(productsInCart);
   }))
-  console.log(productsInCart);
 })
-
 // brand.addEventListener('click',function(e){
 //  })
 // localstorage.productsInCart = JSON.stringify(productsInCart);
 // var storedProduct = JSON.parse(localStorage.productsInCart);
-
 // localStorage.setItem = JSON.stringify('cartdata', productsInCart)
 // // console.log(storedProduct);
 // console.log(localStorage);
-
 }   
 const fetchData =function() {
   fetch('../products.json')
