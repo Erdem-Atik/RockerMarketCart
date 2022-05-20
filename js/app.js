@@ -102,9 +102,18 @@ modal.addEventListener("click", function (e) {
    }
 }))
 
+const displayTotal =function(arr){
+  totalContainer.innerHTML="";
+  const cartSum = arr.reduce((a,b)=>(a+b.total),0)
+  const sumMark = `<div class="total">
+                  <h5>ORDER SUMMARY</h5>
+                  <h5>TOTAL:${cartSum}</h5>
+                  </div>`           
+  totalContainer.insertAdjacentHTML("beforeend", sumMark);
+}
+
 const showCart = function(arr){
   cartContainer.innerHTML="";
-  totalContainer.innerHTML="";
   arr.forEach(el=> {
     console.log(el);
   const markup = 
@@ -126,19 +135,11 @@ const showCart = function(arr){
              <h5 class="productPrice">${el.total}</h5> 
              </div>
         </div>
-
        </li>     
   `
     cartContainer.insertAdjacentHTML("beforeend", markup);
-
   })
-  const sum2 = arr.reduce((a,b)=>(a+b.total),0)
-  console.log(sum2);
-  const sumMark = `<div class="total">
-                  <h5>ORDER SUMMARY</h5>
-                  <h5>TOTAL:${sum2}</h5>
-                  </div>`           
-  totalContainer.insertAdjacentHTML("beforeend", sumMark );
+  displayTotal(arr)
 }
 //showing cart 
 cartSymbol.addEventListener('click', function(e){
@@ -149,7 +150,7 @@ cartSymbol.addEventListener('click', function(e){
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
-
+  
   input.forEach(el=>el.addEventListener('click', function(e)
   {
     cartCounter(productsInCart);
@@ -157,22 +158,15 @@ cartSymbol.addEventListener('click', function(e){
     productsInCart.forEach(el=>{
       if(+el.sys.id===+choose){
         el.numb = +e.target.value
-        el.total2 = function(){return el.numb*this.fields.price}        
-        e.target.parentElement.parentElement.childNodes[9].innerText=el.total2()
+        el._total = function(){
+          return this.fields.price*this.numb
+        }
+       el.total= el._total()          
+       e.target.parentElement.parentElement.childNodes[9].innerText=el.total
       } 
     })
 // //update all products total price UI
-    const sum2 = productsInCart.reduce((a,b)=>(a+b._total()),0)
-
-    console.log(productsInCart);
-
-        const sumMark = `<div class="total">
-                      <h5>ORDER SUMMARY</h5>
-                      <h5>TOTAL:${sum2}</h5>
-                      </div>`     
-      totalContainer.innerHTML=""
-      totalContainer.insertAdjacentHTML("beforeend", sumMark );
-
+    displayTotal(productsInCart)
    })) 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
@@ -180,14 +174,8 @@ cartSymbol.addEventListener('click', function(e){
       return +it.sys.id !== +chosenProductID.id
     })
     chosenProductID.parentElement.remove()
-    const sum2 = productsInCart.reduce((a,b)=>(a+b.total),0)
-    const sumMark = `<div class="total">
-                  <h5>ORDER SUMMARY</h5>
-                  <h5>TOTAL:${sum2}</h5>
-                  </div>`
-  totalContainer.innerHTML=""
-  totalContainer.insertAdjacentHTML("beforeend", sumMark );
-  cartCounter(productsInCart);
+   displayTotal(productsInCart)
+   cartCounter(productsInCart);
   }))
   console.log(productsInCart);
 })
