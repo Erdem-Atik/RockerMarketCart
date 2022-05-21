@@ -67,9 +67,9 @@ productbtn.forEach(el=>{
        const counts = {};
        cart.forEach((el)=>{
        counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
-       el.numb=counts[el.sys.id]
-       el._total = function(){ return this.fields.price*this.numb}
-       el.total= el._total()          
+       el.fields.price = +el.fields.price 
+      //  el._total = function(){ return this.fields.price*this.numb}
+      //  el.total= el._total()          
       })
       productsInCart=[...new Set(cart)] // same products are collected in one object
       // localStorage.setItem('productData',  JSON.stringify(cart));
@@ -97,9 +97,10 @@ modal.addEventListener("click", function (e) {
     modal.classList.add('hidden')
    }
 }))
+
 const displayTotal =function(arr){
   totalContainer.innerHTML="";
-  const cartSum = arr.reduce((a,b)=>(a+b.total),0)
+  const cartSum = arr.reduce((a,b)=>(a+b.fields.price),0)
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${cartSum}</h5>
@@ -132,7 +133,7 @@ const showCart = function(arr){
   `
     cartContainer.insertAdjacentHTML("beforeend", markup);
   })
-  displayTotal(arr)
+  displayTotal(cart)
 }
 //showing cart 
 cartSymbol.addEventListener('click', function(e){
@@ -144,27 +145,21 @@ cartSymbol.addEventListener('click', function(e){
   const price = document.querySelector(".price")
   input.forEach(el=>el.addEventListener('click', function(e)
   {
-    cartCounter(productsInCart);
     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
-    cart.forEach(el=>{
-      if(+el.sys.id===+choose){
-        el.numb = +e.target.value
-        el._total = function(){
-          return this.fields.price*this.numb
-        }
-       el.total= el._total()          
-      }    
-    }
-    )
-
-    console.log(typeof(+choose));
+    pdata.items.forEach(it=>{ 
+      // add some properties the selected products(quantity, )
+      if(+it.sys.id===+choose){ 
+        console.log('test');
+        cart.push(it)
+      }});
     [...new Set(cart)].forEach(el =>{
-     if( el.sys.id=choose){
-      e.target.parentElement.parentElement.childNodes[9].innerText=el.total
+     if(el.sys.id===choose){
+      e.target.parentElement.parentElement.childNodes[9].innerText=cart.reduce((a,b)=>(a+b.price),0)
      }
     })
 // //update all products total price UI
     console.log(cart);
+    cartCounter(productsInCart);
     displayTotal(productsInCart)
    })) 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
@@ -174,7 +169,7 @@ cartSymbol.addEventListener('click', function(e){
     })
     console.log(cart);
     chosenProductID.parentElement.remove()
-   displayTotal(productsInCart)
+    displayTotal(cart)
    cartCounter(productsInCart);
   }))
 })
@@ -195,5 +190,4 @@ const fetchData =function() {
 }
 
 fetchData()
-
 
