@@ -9,14 +9,15 @@ const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-  let cart
+  const cart = []
   let productsInCart
-  console.log(JSON.parse(localStorage.productData));
-  if(JSON.parse(localStorage.productData))  {
-    cart = JSON.parse(localStorage.productData)
-  }else{
-    cart = []
-  }
+
+  // if(JSON.parse(localStorage.productData))  {
+  //   cart = JSON.parse(localStorage.productData)
+  //   // console.log(cart);
+  // }else{
+  //   cart = []
+  // }
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -70,10 +71,11 @@ productbtn.forEach(el=>{
        el._total = function(){ return this.fields.price*this.numb}
        el.total= el._total()          
       })
+      console.log(cart);
       productsInCart=[...new Set(cart)] // same products are collected in one object
-      localStorage.setItem('productData',  JSON.stringify(cart));
-      const getlocal= localStorage.getItem('productData')
-      cartCounter(productsInCart)
+      // localStorage.setItem('productData',  JSON.stringify(cart));
+      // const getlocal= localStorage.getItem('productData')
+      cartCounter([...new Set(cart)])
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
   })
@@ -185,4 +187,5 @@ const fetchData =function() {
 }
 
 fetchData()
+
 
