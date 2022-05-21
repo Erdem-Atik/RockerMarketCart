@@ -9,7 +9,7 @@ const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-  const cart = []
+  let cart = []
   let productsInCart
 
   // if(JSON.parse(localStorage.productData))  {
@@ -71,7 +71,6 @@ productbtn.forEach(el=>{
        el._total = function(){ return this.fields.price*this.numb}
        el.total= el._total()          
       })
-      console.log(cart);
       productsInCart=[...new Set(cart)] // same products are collected in one object
       // localStorage.setItem('productData',  JSON.stringify(cart));
       // const getlocal= localStorage.getItem('productData')
@@ -147,24 +146,33 @@ cartSymbol.addEventListener('click', function(e){
   {
     cartCounter(productsInCart);
     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
-    productsInCart.forEach(el=>{
+    cart.forEach(el=>{
       if(+el.sys.id===+choose){
         el.numb = +e.target.value
         el._total = function(){
           return this.fields.price*this.numb
         }
        el.total= el._total()          
-       e.target.parentElement.parentElement.childNodes[9].innerText=el.total
-      } 
+      }    
+    }
+    )
+
+    console.log(typeof(+choose));
+    [...new Set(cart)].forEach(el =>{
+     if( el.sys.id=choose){
+      e.target.parentElement.parentElement.childNodes[9].innerText=el.total
+     }
     })
 // //update all products total price UI
+    console.log(cart);
     displayTotal(productsInCart)
    })) 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
-    productsInCart=productsInCart.filter(it=>{
+    cart=cart.filter(it=>{
       return +it.sys.id !== +chosenProductID.id
     })
+    console.log(cart);
     chosenProductID.parentElement.remove()
    displayTotal(productsInCart)
    cartCounter(productsInCart);
