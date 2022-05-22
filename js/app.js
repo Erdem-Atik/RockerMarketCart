@@ -54,10 +54,10 @@ displayProduct(pdata)  // display the products
 const productbtn= document.querySelectorAll("button")
 
 function cartCounter (arr){
-  const productNumb = arr.reduce((a,b)=>(a+b.numb),0)
+  const productNumb = arr.length
   cartSymbol.textContent = `cart added: ${productNumb}`
 }
-//cartCounter(productsInCart)
+cartCounter(cart)
 productbtn.forEach(el=>{                        
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;  // find which product is selected
@@ -68,13 +68,14 @@ productbtn.forEach(el=>{
        cart.forEach((el)=>{
        counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
        el.fields.price = +el.fields.price 
-      //  el._total = function(){ return this.fields.price*this.numb}
-      //  el.total= el._total()          
+       el.numb=counts[el.sys.id]
+      el._total = function(){ return this.fields.price*this.numb}
+      el.total= el._total()          
       })
       productsInCart=[...new Set(cart)] // same products are collected in one object
       // localStorage.setItem('productData',  JSON.stringify(cart));
       // const getlocal= localStorage.getItem('productData')
-      cartCounter([...new Set(cart)])
+      cartCounter(cart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
   })
@@ -98,12 +99,18 @@ modal.addEventListener("click", function (e) {
    }
 }))
 
+const cartSum =function(arr){
+  return arr.reduce((a,b)=>(a+b.fields.price),0)
+}
+
 const displayTotal =function(arr){
   totalContainer.innerHTML="";
-  const cartSum = arr.reduce((a,b)=>(a+b.fields.price),0)
+  const sum = cartSum(arr)
+  console.log(sum);
+
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
-                  <h5>TOTAL:${cartSum}</h5>
+                  <h5>TOTAL:${sum}</h5>
                   </div>`           
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
@@ -132,6 +139,7 @@ const showCart = function(arr){
        </li>     
   `
     cartContainer.insertAdjacentHTML("beforeend", markup);
+  
   })
   displayTotal(cart)
 }
@@ -151,10 +159,26 @@ cartSymbol.addEventListener('click', function(e){
       if(+it.sys.id===+choose){ 
         console.log('test');
         cart.push(it)
-      }});
+        const count = {}
+        cart.forEach(el=>{
+         count[el.sys.id] = count[el.sys.id] ? count[el.sys.id] + 1 : 1;
+         el.fields.price = +el.fields.price 
+         el.numb=count[el.sys.id]
+         el._total = function(){ return this.fields.price*this.numb}
+         el.total= el._total()          
+
+        })
+
+      }
+    });
     [...new Set(cart)].forEach(el =>{
      if(el.sys.id===choose){
-      e.target.parentElement.parentElement.childNodes[9].innerText=cart.reduce((a,b)=>(a+b.price),0)
+      el._total = function(){
+        return this.fields.price*this.numb
+      }
+      el.total= el._total()  
+      e.target.parentElement.parentElement.childNodes[9].innerText= el.total
+      console.log(cartSum(cart));
      }
     })
 // //update all products total price UI
@@ -173,13 +197,7 @@ cartSymbol.addEventListener('click', function(e){
    cartCounter(productsInCart);
   }))
 })
-// brand.addEventListener('click',function(e){
-//  })
-// localstorage.productsInCart = JSON.stringify(productsInCart);
-// var storedProduct = JSON.parse(localStorage.productsInCart);
-// localStorage.setItem = JSON.stringify('cartdata', productsInCart)
-// // console.log(storedProduct);
-// console.log(localStorage);
+
 }   
 const fetchData =function() {
   fetch('../products.json')
@@ -191,3 +209,10 @@ const fetchData =function() {
 
 fetchData()
 
+// brand.addEventListener('click',function(e){
+//  })
+// localstorage.productsInCart = JSON.stringify(productsInCart);
+// var storedProduct = JSON.parse(localStorage.productsInCart);
+// localStorage.setItem = JSON.stringify('cartdata', productsInCart)
+// // console.log(storedProduct);
+// console.log(localStorage);
