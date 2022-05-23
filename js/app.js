@@ -53,7 +53,7 @@ displayProduct(pdata)  // display the products
 
 const productbtn= document.querySelectorAll("button")
 
-function cartCounter (arr){
+function cartCounter(arr){
   const productNumb = arr.length
   cartSymbol.textContent = `cart added: ${productNumb}`
 }
@@ -64,11 +64,11 @@ productbtn.forEach(el=>{
  pdata.items.forEach(el=>{                            // add some properties the selected products(quantity, )
     if(+el.sys.id===+chosenProductID){ // think again!
       cart.push(el)
-       const counts = {};
-       cart.forEach((el)=>{
-       counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
-       el.fields.price = +el.fields.price 
-       el.numb=counts[el.sys.id]
+      const counts = {};
+      cart.forEach((el)=>{
+      counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
+      el.fields.price = +el.fields.price 
+      el.numb=counts[el.sys.id]
       el._total = function(){ return this.fields.price*this.numb}
       el.total= el._total()          
       })
@@ -106,8 +106,6 @@ const cartSum =function(arr){
 const displayTotal =function(arr){
   totalContainer.innerHTML="";
   const sum = cartSum(arr)
-  console.log(sum);
-
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum}</h5>
@@ -127,7 +125,7 @@ const showCart = function(arr){
              <h5 class="productTitle">${el.fields.title}</h5>
              </div>
             <form  action="form">
-                <input class="input" type="number" name="quantity" class="quantity" min="1" max="50" value="${el.numb}" autofocus="">          
+                <input class="input" type="number" name="quantity" min="1" max="50" value="${el.numb}" autofocus="">          
             </form>     
             <div class="delete-btn" id="${el.sys.id}">
             <button>Delete</button>
@@ -152,12 +150,12 @@ cartSymbol.addEventListener('click', function(e){
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
   input.forEach(el=>el.addEventListener('click', function(e)
-  {
+  { 
+    console.log(e.target);
     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
     pdata.items.forEach(it=>{ 
       // add some properties the selected products(quantity, )
       if(+it.sys.id===+choose){ 
-        console.log('test');
         cart.push(it)
         const count = {}
         cart.forEach(el=>{
@@ -168,7 +166,6 @@ cartSymbol.addEventListener('click', function(e){
          el.total= el._total()          
 
         })
-
       }
     });
     [...new Set(cart)].forEach(el =>{
@@ -178,23 +175,23 @@ cartSymbol.addEventListener('click', function(e){
       }
       el.total= el._total()  
       e.target.parentElement.parentElement.childNodes[9].innerText= el.total
-      console.log(cartSum(cart));
+
      }
     })
 // //update all products total price UI
-    console.log(cart);
-    cartCounter(productsInCart);
-    displayTotal(productsInCart)
+
+    cartCounter(cart);
+    displayTotal(cart)
    })) 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
     cart=cart.filter(it=>{
       return +it.sys.id !== +chosenProductID.id
     })
-    console.log(cart);
+
     chosenProductID.parentElement.remove()
     displayTotal(cart)
-   cartCounter(productsInCart);
+    cartCounter(cart);
   }))
 })
 
