@@ -58,6 +58,7 @@ function cartCounter(arr){
   cartSymbol.textContent = `cart added: ${productNumb}`
 }
 cartCounter(cart)
+console.log(productbtn);
 productbtn.forEach(el=>{                        
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;  // find which product is selected
@@ -124,9 +125,11 @@ const showCart = function(arr){
              <div class="title">
              <h5 class="productTitle">${el.fields.title}</h5>
              </div>
-            <form  action="form">
-                <input class="input" type="number" name="quantity" min="1" max="50" value="${el.numb}" autofocus="">          
-            </form>     
+             <form>
+              <div class="value-button" id="decrease" value="Decrease Value">-</div>
+                  <input type="number" id="number" value="${el.numb}"/>
+              <div class="value-button" id="increase" value="Increase Value">+</div>
+            </form>
             <div class="delete-btn" id="${el.sys.id}">
             <button>Delete</button>
             </div>
@@ -183,6 +186,28 @@ cartSymbol.addEventListener('click', function(e){
     cartCounter(cart);
     displayTotal(cart)
    })) 
+
+   const valueButton = document.querySelector(".value-button")
+   const devalubutton = [...valueButton]
+  
+   devalubutton.forEach(el=>{
+     console.log(e);
+   })
+
+   function incDecButton(){
+    // valueButton.forEach(el=>{el.addEventListener('click', function(e){
+    //     console.log(e);
+    //  })
+    //  })
+    valueButton.addEventListener('click',function(e){
+      console.log(e);
+    })
+   }
+
+ 
+  incDecButton()
+   
+
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
     cart=cart.filter(it=>{
@@ -213,3 +238,21 @@ fetchData()
 // localStorage.setItem = JSON.stringify('cartdata', productsInCart)
 // // console.log(storedProduct);
 // console.log(localStorage);
+
+
+
+function increaseValue() {
+  const value = parseInt(document.getElementById('number').value, 10);
+  value = isNaN(value) ? 0 : value;
+  value++;
+  document.getElementById('number').value = value;
+}
+
+function decreaseValue() {
+  var value = parseInt(document.getElementById('number').value, 10);
+  value = isNaN(value) ? 0 : value;
+  value < 1 ? value = 1 : '';
+  value--;
+  document.getElementById('number').value = value;
+}
+
