@@ -9,7 +9,7 @@ const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-  let cart = []
+  const cart = []
   let productsInCart
 
   // if(JSON.parse(localStorage.productData))  {
@@ -158,91 +158,42 @@ cartSymbol.addEventListener('click', function(e){
   form.forEach(el=>{
     el.addEventListener('click', function(e){
       const selectedID =+e.target.id;
-      const deletedItem = e.target.parentElement.parentElement;
+      const selectedItem = e.target.parentElement.parentElement;
       const selectedClass = e.target.classList[0]
-      console.log(selectedClass)
+      console.log(selectedItem.childNodes[5].childNodes[3].value)
+      console.log(selectedItem.childNodes[5])
+      console.log(selectedItem.childNodes)
       pdata.items.forEach(it=>{
 
         if((selectedClass==='increase')&&(+it.sys.id===selectedID)){
           cart.push(it)
           cartCounter(cart)
           it.numb=it.numb+1
+          it.total=it._total()
+          selectedItem.childNodes[9].textContent=it.total
+          selectedItem.childNodes[5].childNodes[3].value=cart.length
           displayTotal(cart)
+          console.log(cart);
         }
         if((selectedClass==='decrease')&&(it.sys.id===selectedID)){
           console.log(it.sys.id,selectedClass);
           const index = cart.findIndex(el=>el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
-            it.numb=it.numb-1                         
+            it.numb=it.numb-1 
+                                    
           }
           if(index===-1) {
-            deletedItem.remove() 
+            selectedItem.remove() 
           }
-          console.log(cart);   
+          console.log(cart)
           cartCounter(cart) 
           displayTotal(cart)
+          productsInCart =[...new Set(cart)]
          }
       })
     })
   })
-
-
-//   input.forEach(el=>el.addEventListener('click', function(e)
-//   { 
-//     console.log(e.target);
-//     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
-//     pdata.items.forEach(it=>{ 
-//       // add some properties the selected products(quantity, )
-//       if(+it.sys.id===+choose){ 
-//         cart.push(it)
-//         const count = {}
-//         cart.forEach(el=>{
-//          count[el.sys.id] = count[el.sys.id] ? count[el.sys.id] + 1 : 1;
-//          el.fields.price = +el.fields.price 
-//          el.numb=count[el.sys.id]
-//          el._total = function(){ return this.fields.price*this.numb}
-//          el.total= el._total()          
-
-//         })
-//       }
-//     });
-//     [...new Set(cart)].forEach(el =>{
-//      if(el.sys.id===choose){
-//       el._total = function(){
-//         return this.fields.price*this.numb
-//       }
-//       el.total= el._total()  
-//       e.target.parentElement.parentElement.childNodes[9].innerText= el.total
-
-//      }
-//     })
-// // //update all products total price UI
-
-//     cartCounter(cart);
-//     displayTotal(cart)
-//    })) 
-
-  //  const valueButton = document.querySelector(".value-button")
-  //  const devalubutton = [...valueButton]
-  
-  //  devalubutton.forEach(el=>{
-  //    console.log(e);
-  //  })
-
-  //  function incDecButton(){
-  //   // valueButton.forEach(el=>{el.addEventListener('click', function(e){
-  //   //     console.log(e);
-  //   //  })
-  //   //  })
-  //   valueButton.addEventListener('click',function(e){
-  //     console.log(e);
-  //   })
-  //  }
-
- 
-  // incDecButton()
-   
 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
@@ -264,7 +215,6 @@ const fetchData =function() {
       init(response)})
     .catch((err) => console.error(err.message));
 }
-
 fetchData()
 
 // brand.addEventListener('click',function(e){
@@ -275,19 +225,3 @@ fetchData()
 // // console.log(storedProduct);
 // console.log(localStorage);
 
-
-
-function increaseValue() {
-  const value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
-  value++;
-  document.getElementById('number').value = value;
-}
-
-function decreaseValue() {
-  var value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
-  value < 1 ? value = 1 : '';
-  value--;
-  document.getElementById('number').value = value;
-}
