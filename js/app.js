@@ -167,6 +167,7 @@ cartSymbol.addEventListener('click', function(e){
           cart.push(it)
           cartCounter(cart)
           it.numb=it.numb+1
+          displayTotal(cart)
         }
         if((selectedClass==='decrease')&&(it.sys.id===selectedID)){
           console.log(it.sys.id,selectedClass);
@@ -179,11 +180,9 @@ cartSymbol.addEventListener('click', function(e){
             deletedItem.remove() 
           }
           console.log(cart);   
-          cartCounter(cart)       
+          cartCounter(cart) 
+          displayTotal(cart)
          }
-          if(el.numb===0){
-          deleteItem.remove()
-        }
       })
     })
   })
