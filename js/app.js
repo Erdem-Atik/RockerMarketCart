@@ -68,7 +68,8 @@ productbtn.forEach(el=>{
       const counts = {};
       cart.forEach((el)=>{
       counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
-      el.fields.price = +el.fields.price 
+      el.fields.price = +el.fields.price
+      el.sys.id=+el.sys.id
       el.numb=counts[el.sys.id]
       el._total = function(){ return this.fields.price*this.numb}
       el.total= el._total()          
@@ -147,7 +148,7 @@ const showCart = function(arr){
 //showing cart 
 cartSymbol.addEventListener('click', function(e){
   products.innerHTML ="";
-  cartCounter(productsInCart);
+  cartCounter(cart)
   showCart(productsInCart);
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
@@ -156,11 +157,34 @@ cartSymbol.addEventListener('click', function(e){
   
   form.forEach(el=>{
     el.addEventListener('click', function(e){
-      console.log(e.target.classList);
       const selectedID =+e.target.id;
+      const deletedItem = e.target.parentElement.parentElement;
       const selectedClass = e.target.classList[0]
-      console.log(typeof(selectedID));
-    
+      console.log(selectedClass)
+      pdata.items.forEach(it=>{
+
+        if((selectedClass==='increase')&&(+it.sys.id===selectedID)){
+          cart.push(it)
+          cartCounter(cart)
+          it.numb=it.numb+1
+        }
+        if((selectedClass==='decrease')&&(it.sys.id===selectedID)){
+          console.log(it.sys.id,selectedClass);
+          const index = cart.findIndex(el=>el.sys.id===selectedID)
+          if(index>=0)  {
+            cart.splice(index,1)
+            it.numb=it.numb-1                         
+          }
+          if(index===-1) {
+            deletedItem.remove() 
+          }
+          console.log(cart);   
+          cartCounter(cart)       
+         }
+          if(el.numb===0){
+          deleteItem.remove()
+        }
+      })
     })
   })
 
