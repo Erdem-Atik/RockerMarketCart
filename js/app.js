@@ -126,9 +126,9 @@ const showCart = function(arr){
              <h5 class="productTitle">${el.fields.title}</h5>
              </div>
              <form>
-              <div class="value-button" id="decrease" value="Decrease Value">-</div>
+              <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
                   <input type="number" id="number" value="${el.numb}"/>
-              <div class="value-button" id="increase" value="Increase Value">+</div>
+              <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
             </form>
             <div class="delete-btn" id="${el.sys.id}">
             <button>Delete</button>
@@ -152,60 +152,73 @@ cartSymbol.addEventListener('click', function(e){
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
-  input.forEach(el=>el.addEventListener('click', function(e)
-  { 
-    console.log(e.target);
-    const choose = e.target.parentElement.nextSibling.nextElementSibling.id
-    pdata.items.forEach(it=>{ 
-      // add some properties the selected products(quantity, )
-      if(+it.sys.id===+choose){ 
-        cart.push(it)
-        const count = {}
-        cart.forEach(el=>{
-         count[el.sys.id] = count[el.sys.id] ? count[el.sys.id] + 1 : 1;
-         el.fields.price = +el.fields.price 
-         el.numb=count[el.sys.id]
-         el._total = function(){ return this.fields.price*this.numb}
-         el.total= el._total()          
-
-        })
-      }
-    });
-    [...new Set(cart)].forEach(el =>{
-     if(el.sys.id===choose){
-      el._total = function(){
-        return this.fields.price*this.numb
-      }
-      el.total= el._total()  
-      e.target.parentElement.parentElement.childNodes[9].innerText= el.total
-
-     }
-    })
-// //update all products total price UI
-
-    cartCounter(cart);
-    displayTotal(cart)
-   })) 
-
-   const valueButton = document.querySelector(".value-button")
-   const devalubutton = [...valueButton]
+  const form = document.querySelectorAll("form")
   
-   devalubutton.forEach(el=>{
-     console.log(e);
-   })
-
-   function incDecButton(){
-    // valueButton.forEach(el=>{el.addEventListener('click', function(e){
-    //     console.log(e);
-    //  })
-    //  })
-    valueButton.addEventListener('click',function(e){
-      console.log(e);
+  form.forEach(el=>{
+    el.addEventListener('click', function(e){
+      console.log(e.target.classList);
+      const selectedID =+e.target.id;
+      const selectedClass = e.target.classList[0]
+      console.log(typeof(selectedID));
+    
     })
-   }
+  })
+
+
+//   input.forEach(el=>el.addEventListener('click', function(e)
+//   { 
+//     console.log(e.target);
+//     const choose = e.target.parentElement.nextSibling.nextElementSibling.id
+//     pdata.items.forEach(it=>{ 
+//       // add some properties the selected products(quantity, )
+//       if(+it.sys.id===+choose){ 
+//         cart.push(it)
+//         const count = {}
+//         cart.forEach(el=>{
+//          count[el.sys.id] = count[el.sys.id] ? count[el.sys.id] + 1 : 1;
+//          el.fields.price = +el.fields.price 
+//          el.numb=count[el.sys.id]
+//          el._total = function(){ return this.fields.price*this.numb}
+//          el.total= el._total()          
+
+//         })
+//       }
+//     });
+//     [...new Set(cart)].forEach(el =>{
+//      if(el.sys.id===choose){
+//       el._total = function(){
+//         return this.fields.price*this.numb
+//       }
+//       el.total= el._total()  
+//       e.target.parentElement.parentElement.childNodes[9].innerText= el.total
+
+//      }
+//     })
+// // //update all products total price UI
+
+//     cartCounter(cart);
+//     displayTotal(cart)
+//    })) 
+
+  //  const valueButton = document.querySelector(".value-button")
+  //  const devalubutton = [...valueButton]
+  
+  //  devalubutton.forEach(el=>{
+  //    console.log(e);
+  //  })
+
+  //  function incDecButton(){
+  //   // valueButton.forEach(el=>{el.addEventListener('click', function(e){
+  //   //     console.log(e);
+  //   //  })
+  //   //  })
+  //   valueButton.addEventListener('click',function(e){
+  //     console.log(e);
+  //   })
+  //  }
 
  
-  incDecButton()
+  // incDecButton()
    
 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
@@ -255,4 +268,3 @@ function decreaseValue() {
   value--;
   document.getElementById('number').value = value;
 }
-
