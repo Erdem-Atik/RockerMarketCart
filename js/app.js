@@ -9,7 +9,7 @@ const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-  const cart = []
+  let cart = []
   let productsInCart
 
   // if(JSON.parse(localStorage.productData))  {
@@ -70,8 +70,8 @@ productbtn.forEach(el=>{
       counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
       el.fields.price = +el.fields.price
       el.sys.id=+el.sys.id
-      el.numb=counts[el.sys.id]
-      el._total = function(){ return this.fields.price*this.numb}
+      el.quantity=counts[el.sys.id]
+      el._total = function(){ return this.fields.price*this.quantity}
       el.total= el._total()          
       })
       productsInCart=[...new Set(cart)] // same products are collected in one object
@@ -128,7 +128,7 @@ const showCart = function(arr){
              </div>
              <form>
               <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
-                  <input type="number" id="number" value="${el.numb}"/>
+                  <input type="number" id="number" value="${el.quantity}"/>
               <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
             </form>
             <div class="delete-btn" id="${el.sys.id}">
@@ -160,18 +160,17 @@ cartSymbol.addEventListener('click', function(e){
       const selectedID =+e.target.id;
       const selectedItem = e.target.parentElement.parentElement;
       const selectedClass = e.target.classList[0]
-      console.log(selectedItem.childNodes[5].childNodes[3].value)
       console.log(selectedItem.childNodes[5])
-      console.log(selectedItem.childNodes)
       pdata.items.forEach(it=>{
 
         if((selectedClass==='increase')&&(+it.sys.id===selectedID)){
           cart.push(it)
           cartCounter(cart)
-          it.numb=it.numb+1
+          it.quantity=it.quantity+1
           it.total=it._total()
           selectedItem.childNodes[9].textContent=it.total
-          selectedItem.childNodes[5].childNodes[3].value=cart.length
+          selectedItem.childNodes[5].childNodes[3].value=it.quantity
+          console.log(typeof(selectedItem.childNodes));
           displayTotal(cart)
           console.log(cart);
         }
@@ -180,11 +179,11 @@ cartSymbol.addEventListener('click', function(e){
           const index = cart.findIndex(el=>el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
-            it.numb=it.numb-1 
-                                    
-          }
-          if(index===-1) {
-            selectedItem.remove() 
+            it.quantity=it.quantity-1
+            it.total=it._total()
+            selectedItem.childNodes[9].textContent=it.total
+            selectedItem.childNodes[5].childNodes[3].value=it.quantity 
+            if(it.quantity===0)   selectedItem.remove()                                    
           }
           console.log(cart)
           cartCounter(cart) 
