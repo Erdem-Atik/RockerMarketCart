@@ -12,17 +12,19 @@ function init(pdata){
   let cart = []
   let productsInCart
 
-  // if(JSON.parse(localStorage.productData))  {
-  //   cart = JSON.parse(localStorage.productData)
-  //   // console.log(cart);
-  // }else{
-  //   cart = []
-  // }
+  if((localStorage.productData))  {
+    cart= cart.concat(JSON.parse(localStorage.productData))
+    console.log(`${cart} is exist`);
+    console.log(JSON.parse(localStorage.productData));
+  }else{
+    cart = []
+    console.log(`${cart} is empty`);
+  }
 
 const displayProduct= function(pdata){
     products.innerHTML="";
     totalContainer.innerHTML="";
-    cartContainer.innerHTML=""; 
+    cartContainer.innerHTML="";
 
     pdata.items.forEach((el,index) => {
         const mark = `
@@ -42,7 +44,7 @@ const displayProduct= function(pdata){
           ${el.fields.price}
         </div>
         <button class="btn-add-cart">Add Product</button>
-      </div>  
+      </div>
     </li>
           `
       products.insertAdjacentHTML("beforeend", mark);
@@ -54,12 +56,13 @@ displayProduct(pdata)  // display the products
 const productbtn= document.querySelectorAll("button")
 
 function cartCounter(arr){
+  console.log(arr);
   const productNumb = arr.length
   cartSymbol.textContent = `cart added: ${productNumb}`
 }
 cartCounter(cart)
-console.log(productbtn);
-productbtn.forEach(el=>{                        
+
+productbtn.forEach(el=>{
   el.addEventListener('click', function(e){
   const chosenProductID = e.target.parentElement.id;  // find which product is selected
  pdata.items.forEach(el=>{                            // add some properties the selected products(quantity, )
@@ -72,11 +75,10 @@ productbtn.forEach(el=>{
       el.sys.id=+el.sys.id
       el.quantity=counts[el.sys.id]
       el._total = function(){ return this.fields.price*this.quantity}
-      el.total= el._total()          
+      el.total= el._total()
       })
-      productsInCart=[...new Set(cart)] // same products are collected in one object
-      // localStorage.setItem('productData',  JSON.stringify(cart));
-      // const getlocal= localStorage.getItem('productData')
+      localStorage.setItem('productData',  JSON.stringify(cart));
+      console.log(JSON.parse(localStorage.productData));
       cartCounter(cart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
@@ -88,10 +90,10 @@ modal.addEventListener("click", function (e) {
   const modalClose = e.target;
   if (modalClose.classList.contains("close-modal")) {
     const modalPopUp = modalClose.parentElement;
-    modalPopUp.classList.add("hidden");      
+    modalPopUp.classList.add("hidden");
   }
 });
-//modal closer 
+//modal closer
  document.querySelectorAll('*').forEach(element => element.addEventListener('click', e => {
    if(e.target.className===`btn-add-cart`&& !Array.from(modal.classList).includes('hidden')){
      modal.classList.add('hidden')
@@ -111,50 +113,53 @@ const displayTotal =function(arr){
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
                   <h5>TOTAL:${sum}</h5>
-                  </div>`           
+                  </div>`
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
 const showCart = function(arr){
   cartContainer.innerHTML="";
-  arr.forEach(el=> {
-  const markup = 
-  `<li class="cartItems">
-        <div class="item">
-            <div class="cart">
-                 <img  class="item-picture" src="${el.fields.image}" alt="">
-             </div>
-             <div class="title">
-             <h5 class="productTitle">${el.fields.title}</h5>
-             </div>
-             <form>
-              <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
-                  <input type="number" id="number" value="${el.quantity}"/>
-              <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
-            </form>
-            <div class="delete-btn" id="${el.sys.id}">
-            <button>Delete</button>
+  console.log(arr);
+  if(arr){
+    arr.forEach(el=> {
+      const markup =
+      `<li class="cartItems">
+            <div class="item">
+                <div class="cart">
+                     <img  class="item-picture" src="${el.fields.image}" alt="">
+                 </div>
+                 <div class="title">
+                 <h5 class="productTitle">${el.fields.title}</h5>
+                 </div>
+                 <form>
+                  <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
+                      <input type="number" id="number" value="${el.quantity}"/>
+                  <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
+                </form>
+                <div class="delete-btn" id="${el.sys.id}">
+                <button>Delete</button>
+                </div>
+                <div class="price">
+                 <h5 class="productPrice">${el.total}</h5>
+                 </div>
             </div>
-            <div class="price">
-             <h5 class="productPrice">${el.total}</h5> 
-             </div>
-        </div>
-       </li>     
-  `
-    cartContainer.insertAdjacentHTML("beforeend", markup);
-  
-  })
+           </li>
+      `
+        cartContainer.insertAdjacentHTML("beforeend", markup);
+    
+      })
+  }
   displayTotal(cart)
 }
-//showing cart 
+//showing cart
 cartSymbol.addEventListener('click', function(e){
   products.innerHTML ="";
   cartCounter(cart)
-  showCart(productsInCart);
+  showCart([...new Set(cart)]);
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
   const form = document.querySelectorAll("form")
-  
+
   form.forEach(el=>{
     el.addEventListener('click', function(e){
       const selectedID =+e.target.id;
@@ -172,7 +177,7 @@ cartSymbol.addEventListener('click', function(e){
           selectedItem.childNodes[5].childNodes[3].value=it.quantity
           console.log(typeof(selectedItem.childNodes));
           displayTotal(cart)
-          console.log(cart);
+          localStorage.setItem('productData',  JSON.stringify(cart));
         }
         if((selectedClass==='decrease')&&(it.sys.id===selectedID)){
           console.log(it.sys.id,selectedClass);
@@ -182,11 +187,12 @@ cartSymbol.addEventListener('click', function(e){
             it.quantity=it.quantity-1
             it.total=it._total()
             selectedItem.childNodes[9].textContent=it.total
-            selectedItem.childNodes[5].childNodes[3].value=it.quantity 
-            if(it.quantity===0)   selectedItem.remove()                                    
+            selectedItem.childNodes[5].childNodes[3].value=it.quantity
+            localStorage.setItem('productData',  JSON.stringify(cart));
+            if(it.quantity===0)   selectedItem.remove()
           }
           console.log(cart)
-          cartCounter(cart) 
+          cartCounter(cart)
           displayTotal(cart)
           productsInCart =[...new Set(cart)]
          }
@@ -199,14 +205,14 @@ cartSymbol.addEventListener('click', function(e){
     cart=cart.filter(it=>{
       return +it.sys.id !== +chosenProductID.id
     })
-
+    localStorage.setItem('productData',  JSON.stringify(cart));
     chosenProductID.parentElement.remove()
     displayTotal(cart)
     cartCounter(cart);
   }))
 })
 
-}   
+}
 const fetchData =function() {
   fetch('../products.json')
     .then((data) => data.json())
