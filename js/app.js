@@ -56,7 +56,6 @@ displayProduct(pdata)  // display the products
 const productbtn= document.querySelectorAll("button")
 
 function cartCounter(arr){
-  console.log(arr);
   const productNumb = arr.length
   cartSymbol.textContent = `cart added: ${productNumb}`
 }
@@ -154,6 +153,8 @@ const showCart = function(arr){
 cartSymbol.addEventListener('click', function(e){
   products.innerHTML ="";
   cartCounter(cart)
+  productsInCart = [...new Set(cart)]
+  console.log(productsInCart);
   showCart([...new Set(cart)]);
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
