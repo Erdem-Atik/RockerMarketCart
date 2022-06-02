@@ -12,14 +12,14 @@ function init(pdata){
   let cart = []
   let productsInCart
 
-  if((localStorage.productData))  {
-    cart= cart.concat(JSON.parse(localStorage.productData))
-    console.log(`${cart} is exist`);
-    console.log(JSON.parse(localStorage.productData));
-  }else{
-    cart = []
-    console.log(`${cart} is empty`);
-  }
+  // if((localStorage.productData))  {
+  //   cart= cart.concat(JSON.parse(localStorage.productData))
+  //   console.log(`${cart} is exist`);
+  //   console.log(JSON.parse(localStorage.productData));
+  // }else{
+  //   cart = []
+  //   console.log(`${cart} is empty`);
+  // }
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -69,21 +69,37 @@ productbtn.forEach(el=>{
       cart.push(el)
       const counts = {};
       cart.forEach((el)=>{
-      counts[el.sys.id] = counts[el.sys.id] ? counts[el.sys.id] + 1 : 1;
       el.fields.price = +el.fields.price
       el.sys.id=+el.sys.id
-      el.quantity=counts[el.sys.id]
-      el._total = function(){ return this.fields.price*this.quantity}
-      el.total= el._total()
       })
-      localStorage.setItem('productData',  JSON.stringify(cart));
-      console.log(JSON.parse(localStorage.productData));
       cartCounter(cart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
+      counterProducts(2,cart)
     }
   })
   })
 })
+
+console.log(cart);
+
+function counterProducts (productsID,arr){
+  const total= []
+  const counts = {}
+  arr.forEach((el)=>{
+    counts[el.sys.productsID] = counts[el.sys.productsID] ? counts[el.sys.productsID] + 1 : 1;
+    total[0] =(counts[el.sys.productsID])
+    console.log(el.sys.id);
+    if(el.sys.id===productsID){
+      console.log('work');
+      total[1]=(counts[el.sys.productsID])*el.fields.price    
+    }
+  })
+  console.log(total);
+}
+
+
+
+
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
   const modalClose = e.target;
@@ -201,6 +217,12 @@ cartSymbol.addEventListener('click', function(e){
     })
   })
 
+  // cart.forEach(el=>{
+  //   if(el){
+  //     ddddfff
+  //   }
+  // })
+
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
     cart=cart.filter(it=>{
@@ -222,6 +244,8 @@ const fetchData =function() {
     .catch((err) => console.error(err.message));
 }
 fetchData()
+
+
 
 // brand.addEventListener('click',function(e){
 //  })
