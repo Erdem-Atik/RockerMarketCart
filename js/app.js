@@ -63,42 +63,32 @@ cartCounter(cart)
 
 productbtn.forEach(el=>{
   el.addEventListener('click', function(e){
-  const chosenProductID = e.target.parentElement.id;  // find which product is selected
- pdata.items.forEach(el=>{                            // add some properties the selected products(quantity, )
-    if(+el.sys.id===+chosenProductID){ // think again!
+  const chosenProductID =+e.target.parentElement.id;  
+ pdata.items.forEach(el=>{                            
+    if(+el.sys.id===chosenProductID){ 
       cart.push(el)
-      const counts = {};
-      cart.forEach((el)=>{
-      el.fields.price = +el.fields.price
-      el.sys.id=+el.sys.id
-      })
       cartCounter(cart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
-      counterProducts(2,cart)
     }
   })
+  counterProducts(chosenProductID,cart)
   })
 })
 
-console.log(cart);
-
 function counterProducts (productsID,arr){
+  console.log(arr);
   const total= []
   const counts = {}
   arr.forEach((el)=>{
-    counts[el.sys.productsID] = counts[el.sys.productsID] ? counts[el.sys.productsID] + 1 : 1;
-    total[0] =(counts[el.sys.productsID])
-    console.log(el.sys.id);
-    if(el.sys.id===productsID){
-      console.log('work');
-      total[1]=(counts[el.sys.productsID])*el.fields.price    
+    if(productsID===+el.sys.id) {
+      counts[el] = counts[el] ? counts[el] + 1 : 1;
+      total[0] =(counts[el])
+      total[1]=total[0]*(+el.fields.price)         
     }
   })
   console.log(total);
+  return total
 }
-
-
-
 
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
