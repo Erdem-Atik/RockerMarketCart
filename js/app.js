@@ -71,24 +71,32 @@ productbtn.forEach(el=>{
       setTimeout(()=> modal.classList.remove("hidden"), 200)
     }
   })
-  counterProducts(chosenProductID,cart)
+  quantityOfEachProduct(chosenProductID,cart)
   })
 })
 
-function counterProducts (productsID,arr){
-  console.log(arr);
-  const total= []
+function quantityOfEachProduct(productsID,arr){
+  let quantityOfPro;
   const counts = {}
   arr.forEach((el)=>{
     if(productsID===+el.sys.id) {
       counts[el] = counts[el] ? counts[el] + 1 : 1;
-      total[0] =(counts[el])
-      total[1]=total[0]*(+el.fields.price)         
+      quantityOfPro =(counts[el])
     }
   })
-  console.log(total);
-  return total
+  return quantityOfPro
 }
+
+// function sumOfEachProduct (productsID,arr){
+//     let proSum;
+//     arr.forEach(el=>{
+//       if(productsID===+el.sys.id) {
+//         proSum = 
+//       }
+//     })
+
+// }
+
 
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
@@ -137,14 +145,14 @@ const showCart = function(arr){
                  </div>
                  <form>
                   <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
-                      <input type="number" id="number" value="${el.quantity}"/>
+                      <input type="number" id="number" value="${quantityOfEachProduct(+el.sys.id, cart)}"/>
                   <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
                 </form>
                 <div class="delete-btn" id="${el.sys.id}">
                 <button>Delete</button>
                 </div>
                 <div class="price">
-                 <h5 class="productPrice">${el.total}</h5>
+                 <h5 class="productPrice">${quantityOfEachProduct(+el.sys.id, cart)*(+el.fields.price)}</h5>
                  </div>
             </div>
            </li>
