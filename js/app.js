@@ -87,17 +87,6 @@ function quantityOfEachProduct(productsID,arr){
   return quantityOfPro
 }
 
-// function sumOfEachProduct (productsID,arr){
-//     let proSum;
-//     arr.forEach(el=>{
-//       if(productsID===+el.sys.id) {
-//         proSum = 
-//       }
-//     })
-
-// }
-
-
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
   const modalClose = e.target;
@@ -129,9 +118,9 @@ const displayTotal =function(arr){
                   </div>`
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
+
 const showCart = function(arr){
   cartContainer.innerHTML="";
-  console.log(arr);
   if(arr){
     arr.forEach(el=> {
       const markup =
@@ -168,7 +157,7 @@ cartSymbol.addEventListener('click', function(e){
   products.innerHTML ="";
   cartCounter(cart)
   productsInCart = [...new Set(cart)]
-  console.log(productsInCart);
+
   showCart([...new Set(cart)]);
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
@@ -177,36 +166,33 @@ cartSymbol.addEventListener('click', function(e){
 
   form.forEach(el=>{
     el.addEventListener('click', function(e){
+      console.log(e);
       const selectedID =+e.target.id;
       const selectedItem = e.target.parentElement.parentElement;
       const selectedClass = e.target.classList[0]
-      console.log(selectedItem.childNodes[5])
       pdata.items.forEach(it=>{
 
         if((selectedClass==='increase')&&(+it.sys.id===selectedID)){
           cart.push(it)
           cartCounter(cart)
-          it.quantity=it.quantity+1
-          it.total=it._total()
-          selectedItem.childNodes[9].textContent=it.total
-          selectedItem.childNodes[5].childNodes[3].value=it.quantity
-          console.log(typeof(selectedItem.childNodes));
+          selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
+          selectedItem.childNodes[9].textContent= (quantityOfEachProduct(selectedID,cart))*(+it.fields.price)
           displayTotal(cart)
-          localStorage.setItem('productData',  JSON.stringify(cart));
         }
-        if((selectedClass==='decrease')&&(it.sys.id===selectedID)){
+        if((selectedClass==='decrease')&&(+it.sys.id===selectedID)){
+          cart = cart.filter(el=> (+el.sys.id) !==selectedID)
+          console.log(cart);
+
           console.log(it.sys.id,selectedClass);
           const index = cart.findIndex(el=>el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
-            it.quantity=it.quantity-1
-            it.total=it._total()
-            selectedItem.childNodes[9].textContent=it.total
-            selectedItem.childNodes[5].childNodes[3].value=it.quantity
-            localStorage.setItem('productData',  JSON.stringify(cart));
+            selectedItem.childNodes[9].textContent=it.total = 
+            selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
+ 
             if(it.quantity===0)   selectedItem.remove()
           }
-          console.log(cart)
+    //      console.log(cart)
           cartCounter(cart)
           displayTotal(cart)
           productsInCart =[...new Set(cart)]
@@ -215,11 +201,6 @@ cartSymbol.addEventListener('click', function(e){
     })
   })
 
-  // cart.forEach(el=>{
-  //   if(el){
-  //     ddddfff
-  //   }
-  // })
 
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
