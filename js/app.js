@@ -166,7 +166,6 @@ cartSymbol.addEventListener('click', function(e){
 
   form.forEach(el=>{
     el.addEventListener('click', function(e){
-      console.log(e);
       const selectedID =+e.target.id;
       const selectedItem = e.target.parentElement.parentElement;
       const selectedClass = e.target.classList[0]
@@ -180,21 +179,21 @@ cartSymbol.addEventListener('click', function(e){
           displayTotal(cart)
         }
         if((selectedClass==='decrease')&&(+it.sys.id===selectedID)){
-          cart = cart.filter(el=> (+el.sys.id) !==selectedID)
-          console.log(cart);
-
+     //     cart = cart.filter(el=> (+el.sys.id) !==selectedID)
           console.log(it.sys.id,selectedClass);
-          const index = cart.findIndex(el=>el.sys.id===selectedID)
+          const index = cart.findIndex(el=> +el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
-            selectedItem.childNodes[9].textContent=it.total = 
             selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
- 
-            if(it.quantity===0)   selectedItem.remove()
+            selectedItem.childNodes[9].textContent= (quantityOfEachProduct(selectedID,cart))*(+it.fields.price) 
+            if(!(quantityOfEachProduct(selectedID,cart))) {
+              selectedItem.remove()
+            }
           }
     //      console.log(cart)
           cartCounter(cart)
           displayTotal(cart)
+          console.log(cart);
           productsInCart =[...new Set(cart)]
          }
       })
