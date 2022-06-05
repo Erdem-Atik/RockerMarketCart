@@ -13,15 +13,9 @@ function init(pdata){
   let productsInCart
 
   if((localStorage.productData))  {
-    console.log([...new Set(JSON.parse(localStorage.productData))]);
     cart= cart.concat(JSON.parse(localStorage.productData))
-    console.log(JSON.parse(localStorage.productData));
     const clean = cart.filter((arr, index, self) =>
     index === self.findIndex((t) => (t.sys.id === arr.sys.id)))
-    console.log(clean);
-
-    console.log(`cart is exist as ${cart}`);
-
   }else{
     cart = []
     console.log(`the cart is empty`);
@@ -70,11 +64,12 @@ cartCounter(cart)
 productbtn.forEach(el=>{
   el.addEventListener('click', function(e){
   const chosenProductID =+e.target.parentElement.id;  
- pdata.items.forEach(el=>{                            
+  pdata.items.forEach(el=>{                            
     if(+el.sys.id===chosenProductID){ 
       cart.push(el)
       cartCounter(cart)
       setTimeout(()=> modal.classList.remove("hidden"), 200)
+      localDataReg(cart)
     }
   })
   quantityOfEachProduct(chosenProductID,cart)
@@ -168,12 +163,7 @@ const showCart = function(cartData){
 cartSymbol.addEventListener('click', function(e){
   products.innerHTML ="";
   cartCounter(cart)
-  productsInCart = [...new Set(cart)]
-
   showCart(cart);
-  console.log([...new Set(cart)]);
-  console.log([...new Set(cart)][0]);
-  console.log([...new Set(cart)][1]);
 
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
@@ -239,12 +229,4 @@ const fetchData =function() {
 fetchData()
 
 
-
-// brand.addEventListener('click',function(e){
-//  })
-// localstorage.productsInCart = JSON.stringify(productsInCart);
-// var storedProduct = JSON.parse(localStorage.productsInCart);
-// localStorage.setItem = JSON.stringify('cartdata', productsInCart)
-// // console.log(storedProduct);
-// console.log(localStorage);
 
