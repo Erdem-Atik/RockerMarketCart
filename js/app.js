@@ -12,14 +12,20 @@ function init(pdata){
   let cart = []
   let productsInCart
 
-  // if((localStorage.productData))  {
-  //   cart= cart.concat(JSON.parse(localStorage.productData))
-  //   console.log(`${cart} is exist`);
-  //   console.log(JSON.parse(localStorage.productData));
-  // }else{
-  //   cart = []
-  //   console.log(`${cart} is empty`);
-  // }
+  if((localStorage.productData))  {
+    console.log([...new Set(JSON.parse(localStorage.productData))]);
+    cart= cart.concat(JSON.parse(localStorage.productData))
+    console.log(JSON.parse(localStorage.productData));
+    const clean = cart.filter((arr, index, self) =>
+    index === self.findIndex((t) => (t.sys.id === arr.sys.id)))
+    console.log(clean);
+
+    console.log(`cart is exist as ${cart}`);
+
+  }else{
+    cart = []
+    console.log(`the cart is empty`);
+  }
 
 const displayProduct= function(pdata){
     products.innerHTML="";
@@ -87,6 +93,10 @@ function quantityOfEachProduct(productsID,arr){
   return quantityOfPro
 }
 
+function localDataReg(arr){
+ return localStorage.setItem('productData',  JSON.stringify(arr));
+}
+
 modal.addEventListener("click", function (e) {
   // add click and escape feature!
   const modalClose = e.target;
@@ -119,10 +129,12 @@ const displayTotal =function(arr){
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
 
-const showCart = function(arr){
+const showCart = function(cartData){
   cartContainer.innerHTML="";
-  if(arr){
-    arr.forEach(el=> {
+  const uniqCartData = cartData.filter((arr, index, self) =>
+  index === self.findIndex((t) => (t.sys.id === arr.sys.id)))
+  if(uniqCartData){
+    uniqCartData.forEach(el=> {
       const markup =
       `<li class="cartItems">
             <div class="item">
@@ -158,7 +170,11 @@ cartSymbol.addEventListener('click', function(e){
   cartCounter(cart)
   productsInCart = [...new Set(cart)]
 
-  showCart([...new Set(cart)]);
+  showCart(cart);
+  console.log([...new Set(cart)]);
+  console.log([...new Set(cart)][0]);
+  console.log([...new Set(cart)][1]);
+
   const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
   const price = document.querySelector(".price")
@@ -177,10 +193,9 @@ cartSymbol.addEventListener('click', function(e){
           selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
           selectedItem.childNodes[9].textContent= (quantityOfEachProduct(selectedID,cart))*(+it.fields.price)
           displayTotal(cart)
+          localDataReg(cart)
         }
         if((selectedClass==='decrease')&&(+it.sys.id===selectedID)){
-     //     cart = cart.filter(el=> (+el.sys.id) !==selectedID)
-          console.log(it.sys.id,selectedClass);
           const index = cart.findIndex(el=> +el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
@@ -190,10 +205,9 @@ cartSymbol.addEventListener('click', function(e){
               selectedItem.remove()
             }
           }
-    //      console.log(cart)
           cartCounter(cart)
           displayTotal(cart)
-          console.log(cart);
+          localDataReg(cart)
           productsInCart =[...new Set(cart)]
          }
       })
@@ -210,6 +224,7 @@ cartSymbol.addEventListener('click', function(e){
     chosenProductID.parentElement.remove()
     displayTotal(cart)
     cartCounter(cart);
+    localDataReg(cart)
   }))
 })
 
