@@ -150,7 +150,7 @@ form {
     width: 300px;
     margin: 0 auto;
     text-align: center;
-    padding-top: 50px;
+    padding-top: 1.2rem;
   }
   
   .value-button {
@@ -235,8 +235,8 @@ button {
 } 
 
 .value-button {
-  border:1px solid #203040;
-   padding-top: 3px;  
+  border:1px solid #294020;
+  padding-top: 1px;  
   justify-content: center;
 } 
 

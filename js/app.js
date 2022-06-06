@@ -130,7 +130,7 @@ const showCart = function(cartData){
                  <h5 class="productTitle">${el.fields.title}</h5>
                  </div>
                  <form>
-                  <div class="decrease value-button" id="${el.sys.id}" value="Increase Value">-</div>
+                  <div class="decrease value-button" id="${el.sys.id}" value="Decrease Value">-</div>
                       <input type="number" id="number" value="${quantityOfEachProduct(+el.sys.id, cart)}"/>
                   <div class="increase value-button" id="${el.sys.id}" value="Increase Value">+</div>
                 </form>
