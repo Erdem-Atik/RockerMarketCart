@@ -231,6 +231,13 @@ button {
         width: auto;
         margin-top: 0;
         margin-left: 0;
+        text-align: center;        
+} 
+
+.value-button {
+  border:1px solid #203040;
+   padding-top: 3px;  
+  justify-content: center;
 } 
 
 .total{
