@@ -4,8 +4,6 @@ const cartSymbol = document.querySelector(".cart")
 const modal = document.querySelector(".modal");
 const cartContainer = document.querySelector(".cartContainer")
 const productContainer = document.querySelector(".productContainer")
-const brand = document.querySelector(".brand")
-// const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
@@ -118,8 +116,8 @@ const displayTotal =function(arr){
 
 const showCart = function(cartData){
   cartContainer.innerHTML="";
-  const uniqCartData = cartData.filter((arr, index, self) =>
-  index === self.findIndex((t) => (t.sys.id === arr.sys.id)))
+  const uniqCartData = cartData.filter((el, index, self) =>    //select only uniq elements in the array(cart) in order to mark
+  index === self.findIndex((it) => (it.sys.id === el.sys.id)))
   if(uniqCartData){
     uniqCartData.forEach(el=> {
       const markup =
@@ -145,8 +143,7 @@ const showCart = function(cartData){
             </div>
            </li>
       `
-        cartContainer.insertAdjacentHTML("beforeend", markup);
-    
+        cartContainer.insertAdjacentHTML("beforeend", markup);   
       })
   }
   displayTotal(cart)
@@ -157,9 +154,7 @@ cartSymbol.addEventListener('click', function(e){
   cartCounter(cart)
   showCart(cart);
 
-  const input = document.querySelectorAll("input")
   const delBtn = document.querySelectorAll(".delete-btn")
-  const price = document.querySelector(".price")
   const form = document.querySelectorAll("form")
 
   form.forEach(el=>{

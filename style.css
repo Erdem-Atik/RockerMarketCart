@@ -216,7 +216,13 @@ form {
 .price {
     width: 5vh;
     text-align: center;
+
 }
+.productPrice{
+    width: 5vh;
+    font: 1.6rem Helvetica, Arial;
+}
+
 .delete-btn{
     margin-left: 1rem;
 }
