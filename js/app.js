@@ -5,22 +5,14 @@ const modal = document.querySelector(".modal");
 const cartContainer = document.querySelector(".cartContainer")
 const productContainer = document.querySelector(".productContainer")
 const brand = document.querySelector(".brand")
-const main =document.querySelector("main");
+// const main =document.querySelector("main");
 const totalContainer = document.querySelector(".totalContainer")
 
 function init(pdata){
-  let cart = []
-  let productsInCart
-
-  if((localStorage.productData))  {
-    cart= cart.concat(JSON.parse(localStorage.productData))
-    const clean = cart.filter((arr, index, self) =>
-    index === self.findIndex((t) => (t.sys.id === arr.sys.id)))
-  }else{
-    cart = []
-    console.log(`the cart is empty`);
-  }
-
+let cart = [];
+// check local storage in case the cart data in local storage
+(localStorage.productData)?cart= cart.concat(JSON.parse(localStorage.productData)):cart = [] 
+// marker function for all products from API
 const displayProduct= function(pdata){
     products.innerHTML="";
     totalContainer.innerHTML="";
@@ -54,7 +46,7 @@ const displayProduct= function(pdata){
 displayProduct(pdata)  // display the products
 
 const productbtn= document.querySelectorAll("button")
-
+//count the all products in the cart
 function cartCounter(arr){
   const productNumb = arr.length
   cartSymbol.textContent = `cart added: ${productNumb}`
@@ -75,7 +67,7 @@ productbtn.forEach(el=>{
   quantityOfEachProduct(chosenProductID,cart)
   })
 })
-
+// calculate each product quantity
 function quantityOfEachProduct(productsID,arr){
   let quantityOfPro;
   const counts = {}
@@ -87,7 +79,7 @@ function quantityOfEachProduct(productsID,arr){
   })
   return quantityOfPro
 }
-
+// save cart data in Local Storage
 function localDataReg(arr){
  return localStorage.setItem('productData',  JSON.stringify(arr));
 }
@@ -113,7 +105,7 @@ modal.addEventListener("click", function (e) {
 const cartSum =function(arr){
   return arr.reduce((a,b)=>(a+b.fields.price),0)
 }
-
+// display all total price of products
 const displayTotal =function(arr){
   totalContainer.innerHTML="";
   const sum = cartSum(arr)
@@ -198,26 +190,23 @@ cartSymbol.addEventListener('click', function(e){
           cartCounter(cart)
           displayTotal(cart)
           localDataReg(cart)
-          productsInCart =[...new Set(cart)]
          }
       })
     })
   })
-
-
+// delete the product in the cart
   delBtn.forEach(el=>el.addEventListener('click', function(e){
     const chosenProductID = e.target.parentElement;
     cart=cart.filter(it=>{
       return +it.sys.id !== +chosenProductID.id
     })
-    localStorage.setItem('productData',  JSON.stringify(cart));
     chosenProductID.parentElement.remove()
     displayTotal(cart)
     cartCounter(cart);
     localDataReg(cart)
   }))
 })
-
+// get data from local storage
 }
 const fetchData =function() {
   fetch('../products.json')
