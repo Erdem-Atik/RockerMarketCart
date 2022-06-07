@@ -1,6 +1,6 @@
 'use strict';
 const products = document.querySelector(".products")
-const cartSymbol = document.querySelector(".cart")
+const cartSymbol = document.querySelector(".fa-shopping-cart")
 const modal = document.querySelector(".modal");
 const cartContainer = document.querySelector(".cartContainer")
 const productContainer = document.querySelector(".productContainer")
@@ -43,7 +43,7 @@ const productbtn= document.querySelectorAll("button")
 //count the all products in the cart
 function cartCounter(arr){
   const productNumb = arr.length
-  cartSymbol.textContent = `cart added: ${productNumb}`
+  cartSymbol.textContent = `${productNumb}`
 }
 cartCounter(cart)
 
@@ -78,23 +78,23 @@ function localDataReg(arr){
  return localStorage.setItem('productData',  JSON.stringify(arr));
 }
 
-modal.addEventListener("click", function (e) {
-  // add click and escape feature!
-  const modalClose = e.target;
-  if (modalClose.classList.contains("close-modal")) {
-    const modalPopUp = modalClose.parentElement;
-    modalPopUp.classList.add("hidden");
-  }
-});
-//modal closer
- document.querySelectorAll('*').forEach(element => element.addEventListener('click', e => {
-   if(e.target.className===`btn-add-cart`&& !Array.from(modal.classList).includes('hidden')){
-     modal.classList.add('hidden')
-   }
-   if(e.target.className!==`btn-add-cart`) {
-    modal.classList.add('hidden')
-   }
-}))
+// modal.addEventListener("click", function (e) {
+//   // add click and escape feature!
+//   const modalClose = e.target;
+//   if (modalClose.classList.contains("close-modal")) {
+//     const modalPopUp = modalClose.parentElement;
+//     modalPopUp.classList.add("hidden");
+//   }
+// });
+// //modal closer
+//  document.querySelectorAll('*').forEach(element => element.addEventListener('click', e => {
+//    if(e.target.className===`btn-add-cart`&& !Array.from(modal.classList).includes('hidden')){
+//      modal.classList.add('hidden')
+//    }
+//    if(e.target.className!==`btn-add-cart`) {
+//     modal.classList.add('hidden')
+//    }
+// }))
 
 const cartSum =function(arr){
   return arr.reduce((a,b)=>(a+b.fields.price),0)

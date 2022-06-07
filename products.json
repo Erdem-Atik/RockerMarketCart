@@ -15,7 +15,7 @@
           "title": "Ibanez Electro Guitar",
           "price": 20,
           "image":  "./images/product-2.JPG",
-          "brand": "Great Comfort"
+          "brand": "Ibanez"
   
         }}
       ,
@@ -25,7 +25,7 @@
           "title": "Ibanez Washed Denim",
           "price": 30,
           "image":  "./images/product-3.JPG",
-          "brand": "Bed Bright" 
+          "brand": "Ibanez" 
         }
       } 
     ]
