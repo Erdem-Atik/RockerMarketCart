@@ -64,11 +64,15 @@ main{
     .products{grid-template-columns:repeat(1,1fr)}
 }
 .product {
+    border: rgb(196, 33, 55, 0.4) 1px solid;
+    border-radius: 3px;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    padding: 0;
-    margin: 0;    
+    padding: 0.5rem;
+    margin: 0;
+    justify-content: center;  
+    align-items :center;  
 }
 .productContainer {
     margin-top: 0;
@@ -88,6 +92,11 @@ main{
     object-fit: cover;
     border-radius: 2%;
     border: 1px solid black ;
+}
+.product-name{
+    width:  120px;
+    text-align: center;
+    font-weight: bold;
 }
 .hidden {
     display: none;
@@ -113,15 +122,18 @@ main{
     margin-left: 1rem 0 0 5rem;
 }
 .item {
+    border: rgb(196, 33, 55, 0.4) 1px solid;
+    border-radius: 3px;
     display: flex;
+    gap: 1.5rem;
     align-items: center;
-    margin: 6rem  3rem 0;
-    border: 1px solid red;
+    margin: 0;
+    width: auto;  
     height: 13rem;
     padding: 0;
 }
 .title{
-    width: 25vh;
+    width: 15vh;
     text-align: center;
 }
 
@@ -133,6 +145,7 @@ main{
     text-align: center;
     height: auto;
 }
+
 .quantity{
     display: flex;
 }
@@ -147,13 +160,20 @@ input{
 }
 
 form {
-    width: 300px;
+    width:max-content;
     margin: 0 auto;
     text-align: center;
     padding-top: 1.2rem;
   }
+.productTitle{
+    width: min-content;
+}
+
+.productTitle >h5{
+    width: min-content;
+}
   
-  .value-button {
+.value-button {
     display: inline-block;
     border: 1px solid #ddd;
     margin: 0px;
@@ -161,7 +181,7 @@ form {
     height: 20px;
     text-align: center;
     vertical-align: middle;
-    padding: 11px 0;
+    padding-top: 11px;
     background: #eee;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -207,19 +227,18 @@ form {
 }
 
 .item-picture {
-    width:  72px;
-    height: 120px;
+    width:  12vh;
+    height: auto;
     object-fit: cover;
-    border: 1px solid black;
     margin: 0;
 }
 .price {
-    width: 5vh;
+    width: auto;
     text-align: center;
 
 }
 .productPrice{
-    width: 5vh;
+    width: auto;
     font: 1.6rem Helvetica, Arial;
 }
 
@@ -243,5 +262,5 @@ button {
 .total{
     border:1px solid black;
     margin: 10rem 0 0 0;
-    width: max-content;
+    width: min-content;
 }

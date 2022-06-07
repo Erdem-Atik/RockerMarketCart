@@ -19,19 +19,15 @@ const displayProduct= function(pdata){
     pdata.items.forEach((el,index) => {
         const mark = `
       <li>
-      <div class="product" id="${el.sys.id}" >
-        <a href="/#/product/1">
-          <img src="./images/product-${index+1}.JPG" alt="product ${index+1}" />
-        </a>
+      <div class="product" id="${el.sys.id}" >      
+        <img class="product-image" src="./images/product-${index+1}.JPG" alt="product ${index+1}" />
         <div class="product-name">
-          <a href="/#/product/1">
-         ${el.fields.title}
-          </a>
+       <h5>${el.fields.title}</h5>
         </div>
         <div class="product-brand">
         </div>
         <div class="product-price">
-          ${el.fields.price}
+          $${el.fields.price}
         </div>
         <button class="btn-add-cart">Add Product</button>
       </div>
@@ -109,7 +105,7 @@ const displayTotal =function(arr){
   const sum = cartSum(arr)
   const sumMark = `<div class="total">
                   <h5>ORDER SUMMARY</h5>
-                  <h5>TOTAL:${sum}</h5>
+                  <h5>TOTAL:$${sum}</h5>
                   </div>`
   totalContainer.insertAdjacentHTML("beforeend", sumMark);
 }
@@ -138,7 +134,7 @@ const showCart = function(cartData){
                 <button>Delete</button>
                 </div>
                 <div class="price">
-                 <h5 class="productPrice">${quantityOfEachProduct(+el.sys.id, cart)*(+el.fields.price)}</h5>
+                 <h5 class="productPrice">$${quantityOfEachProduct(+el.sys.id, cart)*(+el.fields.price)}</h5>
                  </div>
             </div>
            </li>
@@ -168,7 +164,7 @@ cartSymbol.addEventListener('click', function(e){
           cart.push(it)
           cartCounter(cart)
           selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
-          selectedItem.childNodes[9].textContent= (quantityOfEachProduct(selectedID,cart))*(+it.fields.price)
+          selectedItem.childNodes[9].textContent= `$${(quantityOfEachProduct(selectedID,cart))*(+it.fields.price)}`
           displayTotal(cart)
           localDataReg(cart)
         }
@@ -177,7 +173,7 @@ cartSymbol.addEventListener('click', function(e){
           if(index>=0)  {
             cart.splice(index,1)
             selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
-            selectedItem.childNodes[9].textContent= (quantityOfEachProduct(selectedID,cart))*(+it.fields.price) 
+            selectedItem.childNodes[9].textContent= `$${(quantityOfEachProduct(selectedID,cart))*(+it.fields.price)}`
             if(!(quantityOfEachProduct(selectedID,cart))) {
               selectedItem.remove()
             }
