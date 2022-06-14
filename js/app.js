@@ -1,6 +1,6 @@
 'use strict';
 import {products,cartSymbol, displayProduct,displayTotal,displayCart} from './view.js'
-
+export {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart}
 
 //calculate each products in the cart quantity
 function quantityOfEachProduct(productsID,arr){
@@ -111,17 +111,13 @@ cartSymbol.addEventListener('click', function(e){
 }
 
 // get data from local storage 
-<<<<<<< HEAD
-export const fetchData = async () =>{
-=======
 const fetchData =function() {
->>>>>>> 1caf20dab804e2b048ffc006830421aa8cde4491
   fetch('../products.json')
     .then((data) => data.json())
-    .then(response=>init(response))
+    .then((response) =>{
+      init(response)})
     .catch((err) => console.error(err.message));
 }
-
 fetchData()
 
-export {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart}
+
