@@ -22,7 +22,7 @@ body{
 /*Header */
 header{
     grid-area: header;
-    background-color: #203040;
+    background-color: #010a13;
     color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -46,7 +46,7 @@ header a:hover{
 }
 
 footer{
-    background-color: #203040;
+    background-color: #010a13;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,40 +107,13 @@ main{
     height: 200px;
     object-fit: cover;
     border-radius: 2%;
-    border: 1px solid black ;
+    border: rgb(196, 33, 55, 0.4) 1px solid;
 }
 .product-name{
     width:  120px;
     text-align: center;
     font-weight: bold;
 }
-.hidden {
-    display: none;
-  }
-  /*Modal */
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10%;
-    height: 10rem;
-    background-color: white;
-    padding: 0;
-    border-radius: 3x;
-    border: 1px solid #203040;
-    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-    z-index: 10;
-  }
-
-.modal>p{
-border: rgb(196, 33, 55, 0.4) 1px solid;
-width: min-content;
-}
-.close-modal{
-    margin-top: 3px;
-}
-  
   /*Cart*/
 .cartContainer{
     list-style-type: none;
@@ -278,7 +251,6 @@ button {
         text-align: center;        
 }
 
-
 .value-button {
  width: 5vh;
  width: 5vh;
@@ -288,7 +260,7 @@ button {
 } 
 
 .total{
-    border:1px solid black;
+    border: rgb(196, 33, 55, 0.4) 1px solid;
     margin: 10rem 0 0 0;
     width: min-content;
 }
