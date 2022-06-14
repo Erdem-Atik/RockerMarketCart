@@ -7,7 +7,11 @@ const productContainer = document.querySelector(".productContainer")
 const totalContainer = document.querySelector(".totalContainer")
 
 
+<<<<<<< HEAD
 import {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart,fetchData} from './app.js'
+=======
+import {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart} from './app.js'
+>>>>>>> 1caf20dab804e2b048ffc006830421aa8cde4491
 
 const displayProduct= function(pdata){
     products.innerHTML="";

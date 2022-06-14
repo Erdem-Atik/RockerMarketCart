@@ -111,7 +111,11 @@ cartSymbol.addEventListener('click', function(e){
 }
 
 // get data from local storage 
+<<<<<<< HEAD
 export const fetchData = async () =>{
+=======
+const fetchData =function() {
+>>>>>>> 1caf20dab804e2b048ffc006830421aa8cde4491
   fetch('../products.json')
     .then((data) => data.json())
     .then(response=>init(response))
