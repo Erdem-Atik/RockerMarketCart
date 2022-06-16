@@ -81,4 +81,3 @@ const displayTotal =function(arr){
   }
 
   export {products,cartSymbol, displayProduct, displayTotal, displayCart}
-

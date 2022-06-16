@@ -59,7 +59,9 @@ function deleteProduct(dom,arr){
         chosenProductID.parentElement.remove()
         displayTotal(arr)
         cartCounter(arr);
+        console.log(arr);
         localDataReg(arr)
+        console.log(arr);
       }))
 }
 
@@ -103,12 +105,30 @@ cartCounter(cart)
 addProduct(productbtn,pdata)
 //showing cart
 cartSymbol.addEventListener('click', function(e){
+
+  console.log(cart);
   products.innerHTML ="";
   cartCounter(cart)
   displayCart(cart);
 
   const delBtn = document.querySelectorAll(".delete-btn")
   const form = document.querySelectorAll("form")
+
+// function FormSel()
+// {
+//   form.forEach(el=>{
+//     el.addEventListener('click', function(e){
+//     this.selectedID =+e.target.id;
+//     this.selectedItem = e.target.parentElement.parentElement;
+//     this.selectedClass = e.target.classList[0]
+//     })
+//   })
+ 
+// }
+
+// let test = new FormSel()
+
+// console.log(test);
 
   form.forEach(el=>{
     el.addEventListener('click', function(e){
