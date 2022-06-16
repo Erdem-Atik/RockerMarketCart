@@ -1,8 +1,10 @@
-
+// getting JSON data from the API
 export async function getData() {
-
-    const res = await fetch('../products.json');
-
-    const reusult = await res.json();
-    return reusult;
+    try{
+        const res = await fetch('../products.json');  
+        const result = await res.json();
+    return result;
+    } catch(err) {
+            console.log(err);
+    }   
 }

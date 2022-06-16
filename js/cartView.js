@@ -9,17 +9,6 @@ const totalContainer = document.querySelector(".totalContainer")
 import {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart} from './app.js'
 
 
-
-// const someFunc = () => {
-//   fetchData().then(data => {
-//     console.log(data);
-//       /* do what you want to do in promise resolve callback function */
-//   })
-// }
-
-// someFunc()
-
-
 const displayProduct= function(pdata){
     products.innerHTML="";
     totalContainer.innerHTML="";
