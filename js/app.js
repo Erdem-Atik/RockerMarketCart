@@ -1,5 +1,6 @@
 'use strict';
-import {products,cartSymbol, displayProduct,displayTotal,displayCart} from './view.js'
+import {products,cartSymbol, displayProduct,displayTotal,displayCart} from './cartView.js'
+import { getData } from './model.js';
 export {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart}
 
 //calculate each products in the cart quantity
@@ -27,6 +28,13 @@ function cartCounter(arr){
   const productNumb = arr.length
   cartSymbol.textContent = `${productNumb}`
 }
+
+function productProperty(selectedEl, selId, el){
+    selectedEl.childNodes[5].childNodes[3].value=quantityOfEachProduct(selId,cart)
+    selectedEl.childNodes[9].textContent= `$${(quantityOfEachProduct(selId,cart))*(+el.fields.price)}`
+}
+
+
 
 let cart = [];
 
@@ -73,8 +81,7 @@ cartSymbol.addEventListener('click', function(e){
         if((selectedClass==='increase')&&(+it.sys.id===selectedID)){
           cart.push(it)
           cartCounter(cart)
-          selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
-          selectedItem.childNodes[9].textContent= `$${(quantityOfEachProduct(selectedID,cart))*(+it.fields.price)}`
+          productProperty(selectedItem,selectedID,it)
           displayTotal(cart)
           localDataReg(cart)
         }
@@ -82,8 +89,7 @@ cartSymbol.addEventListener('click', function(e){
           const index = cart.findIndex(el=> +el.sys.id===selectedID)
           if(index>=0)  {
             cart.splice(index,1)
-            selectedItem.childNodes[5].childNodes[3].value=quantityOfEachProduct(selectedID,cart)
-            selectedItem.childNodes[9].textContent= `$${(quantityOfEachProduct(selectedID,cart))*(+it.fields.price)}`
+            productProperty(selectedItem,selectedID,it)
             if(!(quantityOfEachProduct(selectedID,cart))) {
               selectedItem.remove()
             }
@@ -110,14 +116,5 @@ cartSymbol.addEventListener('click', function(e){
 
 }
 
-// get data from local storage 
-const fetchData =function() {
-  fetch('../products.json')
-    .then((data) => data.json())
-    .then((response) =>{
-      init(response)})
-    .catch((err) => console.error(err.message));
-}
-fetchData()
 
-
+getData().then(res=>init(res))
