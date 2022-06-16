@@ -62,6 +62,7 @@ function deleteProduct(dom,arr){
         console.log(arr);
         localDataReg(arr)
         console.log(arr);
+
       }))
 }
 
@@ -105,7 +106,8 @@ cartCounter(cart)
 addProduct(productbtn,pdata)
 //showing cart
 cartSymbol.addEventListener('click', function(e){
-
+  cart = [];
+  cart= cart.concat(JSON.parse(localStorage.productData))
   console.log(cart);
   products.innerHTML ="";
   cartCounter(cart)
