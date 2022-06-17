@@ -93,7 +93,7 @@ const  manageCart =function(proData,arr,cl,item,id) {
 }
 
 let cart = [];
-
+// controller function
 function init(pdata){
 // check local storage in case the cart data in local storage
 (localStorage.productData)?cart= cart.concat(JSON.parse(localStorage.productData)):cart = [] 
@@ -116,31 +116,16 @@ cartSymbol.addEventListener('click', function(e){
   const delBtn = document.querySelectorAll(".delete-btn")
   const form = document.querySelectorAll("form")
 
-// function FormSel()
-// {
-//   form.forEach(el=>{
-//     el.addEventListener('click', function(e){
-//     this.selectedID =+e.target.id;
-//     this.selectedItem = e.target.parentElement.parentElement;
-//     this.selectedClass = e.target.classList[0]
-//     })
-//   })
- 
-// }
-
-// let test = new FormSel()
-
-// console.log(test);
 
   form.forEach(el=>{
     el.addEventListener('click', function(e){
-      const selectedID =+e.target.id;
-      const selectedItem = e.target.parentElement.parentElement;
-      const selectedClass = e.target.classList[0]
-
-     manageCart(pdata,cart,selectedClass,selectedItem,selectedID)
+    const selectedID =+e.target.id;
+    const selectedItem = e.target.parentElement.parentElement;
+    const selectedClass = e.target.classList[0]
+    manageCart(pdata,cart, selectedClass,selectedItem,selectedID)
     })
   })
+ 
 deleteProduct(delBtn,cart)
 })
 }

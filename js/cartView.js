@@ -80,4 +80,8 @@ const displayTotal =function(arr){
     displayTotal(cart)
   }
 
+
+
+
+
   export {products,cartSymbol, displayProduct, displayTotal, displayCart}
