@@ -1,5 +1,5 @@
 'use strict';
-import {products,cartSymbol, displayProduct,displayTotal,displayCart} from './cartView.js'
+import {products,cartSymbol, displayProduct,displayTotal,displayCart} from './markers.js'
 import { getData } from './model.js';
 export {quantityOfEachProduct,localDataReg,cartSum,cartCounter,cart}
 
