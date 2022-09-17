@@ -2,10 +2,10 @@
 export async function getData() {
   try {
     const res = await fetch("../products.json");
+    if (!res) throw new Error("products are unavailable");
     const result = await res.json();
     return result;
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
 }
-//delete then

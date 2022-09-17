@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  border: 2px red solid;
 }
 html {
   font-size: 62.5%; /* 16px*0,625 =10 px = 1rem */
