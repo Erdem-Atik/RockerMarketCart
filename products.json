@@ -33,7 +33,7 @@
         "sys": { "id": "4" },
         "fields": {
           "title": "Fender Player Stratocaster HSS Pau Ferro",
-          "price": 1140,
+          "price": 1840,
           "image":  "./images/product-4.JPG",
           "brand": "Fender" 
         }
@@ -53,7 +53,7 @@
         "sys": { "id": "6" },
         "fields": {
           "title": "Fender Player Stratocaster",
-          "price": 1140,
+          "price": 2104,
           "image":  "./images/product-6.JPG",
           "brand": "Fender" 
         }
@@ -63,7 +63,7 @@
         "sys": { "id": "7" },
         "fields": {
           "title": "Gibson 1957 Les Paul Goldtop",
-          "price": 1140,
+          "price": 1526,
           "image":  "./images/product-7.JPG",
           "brand": "Gibson" 
         }
@@ -73,7 +73,7 @@
         "sys": { "id": "8" },
         "fields": {
           "title": "Ibanez JEMJRSP-PK Junior Steve Vai",
-          "price": 1140,
+          "price": 1317,
           "image":  "./images/product-8.JPG",
           "brand": "Ibanez" 
         }
@@ -82,7 +82,7 @@
         "sys": { "id": "9" },
         "fields": {
           "title": "Jackson X Series King V.",
-          "price": 1140,
+          "price": 1153,
           "image":  "./images/product-9.JPG",
           "brand": "Jackson" 
         }

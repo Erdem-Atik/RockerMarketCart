@@ -170,6 +170,7 @@ form {
 }
 .productTitle {
   width: min-content;
+  text-align: left;
 }
 
 .productTitle > h5 {
