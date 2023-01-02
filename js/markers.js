@@ -71,7 +71,7 @@ const displayCart = function (cartData) {
                        }" alt="">
                    </div>
                    <div class="title">
-                   <h5 class="productTitle">${el.fields.title}</h5>
+                   <h5 class="productTitle">${el.fields.title.length>26 ?`${el.fields.title.slice(0,25)}...`: el.fields.title}</h5>
                    </div>
                    <form>
                     <div class="decrease value-button" id="${

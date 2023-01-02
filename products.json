@@ -3,30 +3,102 @@
       {
         "sys": { "id": "1" },
         "fields": {
-          "title": "Fender Black Accoustic",
-          "price": 10,
+          "title": "EVH Striped Series",
+          "price": 1200,
           "image": "./images/product-1.JPG" ,
-          "brand": "Fender"
+          "brand": "EVH"
         }
       },
       {
         "sys": { "id": "2" },
         "fields": {
-          "title": "Ibanez Electro Guitar",
-          "price": 20,
+          "title": "Fender American Pro Jaguar",
+          "price": 1410,
           "image":  "./images/product-2.JPG",
-          "brand": "Ibanez"
+          "brand": "Fender"
   
         }}
       ,
       {
         "sys": { "id": "3" },
         "fields": {
-          "title": "Ibanez Washed Denim",
-          "price": 30,
+          "title": "Fender Custom Shop Strat CC Sea Foam 1963",
+          "price": 1140,
           "image":  "./images/product-3.JPG",
+          "brand": "Fender" 
+        }
+      }
+      ,
+      {
+        "sys": { "id": "4" },
+        "fields": {
+          "title": "Fender Player Stratocaster HSS Pau Ferro",
+          "price": 1140,
+          "image":  "./images/product-4.JPG",
+          "brand": "Fender" 
+        }
+      }
+      ,
+      {
+        "sys": { "id": "5" },
+        "fields": {
+          "title": "Fender Player Stratocaster Plus Top Pau Ferro",
+          "price": 1140,
+          "image":  "./images/product-5.JPG",
+          "brand": "Fender" 
+        }
+      }
+      ,
+      {
+        "sys": { "id": "6" },
+        "fields": {
+          "title": "Fender Player Stratocaster",
+          "price": 1140,
+          "image":  "./images/product-6.JPG",
+          "brand": "Fender" 
+        }
+      }
+      ,
+      {
+        "sys": { "id": "7" },
+        "fields": {
+          "title": "Gibson 1957 Les Paul Goldtop",
+          "price": 1140,
+          "image":  "./images/product-7.JPG",
+          "brand": "Gibson" 
+        }
+      }
+      ,
+      {
+        "sys": { "id": "8" },
+        "fields": {
+          "title": "Ibanez JEMJRSP-PK Junior Steve Vai",
+          "price": 1140,
+          "image":  "./images/product-8.JPG",
           "brand": "Ibanez" 
         }
-      } 
+      },
+      {
+        "sys": { "id": "9" },
+        "fields": {
+          "title": "Jackson X Series King V.",
+          "price": 1140,
+          "image":  "./images/product-9.JPG",
+          "brand": "Jackson" 
+        }
+      },
+      {
+        "sys": { "id": "10" },
+        "fields": {
+          "title": "Ibanez JEM77P-BFP Blue Floral",
+          "price": 1140,
+          "image":  "./images/product-10.JPG",
+          "brand": "Ibanez" 
+        }
+      }
+                                 
     ]
   }
+
+  
+  

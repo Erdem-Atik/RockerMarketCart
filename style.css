@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  border: 2px red solid;
 }
 html {
   font-size: 62.5%; /* 16px*0,625 =10 px = 1rem */
@@ -107,13 +106,14 @@ main {
 
 .product img {
   width: 120px;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   border-radius: 2%;
   border: rgb(196, 33, 55, 0.4) 1px solid;
 }
 .product-name {
   width: 120px;
+  height: 101px;
   text-align: center;
   font-weight: bold;
 }
@@ -266,4 +266,11 @@ button {
   border: rgb(196, 33, 55, 0.4) 1px solid;
   margin: 10rem 0 0 0;
   width: min-content;
+}
+footer{
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  height: fit-content;
 }
