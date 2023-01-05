@@ -46,13 +46,6 @@ header a:hover {
   padding-right: 2rem;
 }
 
-footer {
-  background-color: #010a13;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-}
 
 main {
   display: flex;
@@ -274,15 +267,26 @@ footer{
   padding: 0;
   margin: 0;
   height: fit-content;
+  justify-content: center;
+  align-items: center;
+  background-color: #010a13;
+  color: #ffffff;
 }
 
 footer > h4{
   padding: 0;
   margin: 1rem 0 1rem 0;
+  font: 2rem Helvetica, Arial;
 }
 
 footer > p{
   font: 1rem Helvetica, Arial;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 0;
+}
+
+footer > a, a:link, a:visited {
+  color: #f0899f;
+  text-decoration: none;
+
 }
